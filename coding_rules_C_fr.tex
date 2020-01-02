@@ -1,0 +1,1116 @@
+% Licence CC-BY-SA
+\chapter{C}
+	\section{Projet}
+		Nous conseillons (pour ne pas dire nous imposons), de ne pas utiliser d'IDE\footnote{logiciel qui cache des éléments de compilation et autres}, pour la compilation d'un programme. Un makefile est conseillé, couplé avec un éditeur de texte.
+
+		Nous souhaitons qu'un simple \verb+make+ à la base de l'arborescence permette de compiler le code.
+
+		\subsection{Pas d'IDE}
+			\subsubsection{Makefile}
+				Le makefile à la racine de votre projet doit comporter comme première directive \verb+all:+ qui permet de compiler tout votre projet, ainsi qu'une directive \verb+mrproper+ qui doit permettre de supprimer tous les fichiers générés automatiquement (\verb+*.o+, \verb+exec+).
+
+				La compilation doit se faire en \verb+-Wall+ sans que cela n’affiche le moindre warning car un warning est un bug potentiel.
+
+				Un exemple de \verb+makefile+ de base :
+
+				\begin{figure}[H]
+					\begin{changemargin}{-2.5cm}{-2.5cm}
+					\begin{tcolorbox}
+					\begin{verbatim}
+						SOURCE = src
+						ROOT_DIR = bin
+						EXEC = execName
+						CCFLAGS = -Wall
+						CXXFLAGS = -Wall
+						CPP_SRC=$(shell find $(SOURCE) -name *.cpp)
+						CPP_OBJ=$(CPP_SRC:.cpp=.o)
+						C_SRC=$(shell find $(SOURCE) -name *.c)
+						C_OBJ=$(C_SRC:.c=.o)
+						OBJ=$(C_OBJ) $(CPP_OBJ)
+
+						all: makedeps $(ROOT_DIR)/$(EXEC)
+						$(ROOT_DIR)/$(EXEC): $(OBJ)
+						    $(CXX) -o $@ $^ $(LDFLAGS)
+						%.o: %.c
+						    $(CC) -c -o $@ $< $(CCFLAGS)
+						%.o: %.cpp
+						    $(CXX) -c -o $@ $< $(CXXFLAGS)
+						clean:
+						    rm -f $(shell find $(SOURCE) -name *.o)
+						    rm -f $(shell find $(SOURCE) -name *.so)
+						mrproper: clean cleanDump
+						    rm -f $(ROOT_DIR)/$(EXEC)
+						makedeps:
+						    @makedepend -Y $(C_SRC) $(CPP_SRC) 2> /dev/null
+					    #
+					\end{verbatim}
+					\end{tcolorbox}
+					\end{changemargin}
+					\caption{Makefile}
+				\end{figure}
+
+			\subsubsection{Arborescence}
+				Un projet doit contenir un dossier \verb+src+ et un \verb+makefile+ et/ou un \verb+configure+, l'exécutable doit être généré dans un second dossier \verb+bin+, de plus, il peut être adjoint un dossier \verb+doc+ qui contiendra la documentation, un dossier \verb+res+ qui contiendra les fichiers utile au fonctionnement de l’exécutable (fichiers de config/données/\dots), \verb+lib+ pour les fichiers nécessaires à la compilation, autre que les codes sources.
+				
+				\begin{figure}[H]
+					\begin{changemargin}{-2.5cm}{-2.5cm}
+					\begin{tcolorbox}
+					\begin{verbatim}
+						.
+						├── bin
+						│   └── exec
+						├── makefile
+						└── src
+						    └── main.c
+					\end{verbatim}
+					\end{tcolorbox}
+					\end{changemargin}
+					\caption{Arborescence de configuration du projet}
+				\end{figure}
+
+			\subsubsection{Sous arborescence}
+				Les fichiers sources doivent être dispatchés dans des sous dossiers de façon à séparer les éléments du code en les regroupant par catégorie.
+
+				Le nombre de sous répertoires ainsi que leurs profondeur n'est pas limité, mais ne doit pas nuire à la compréhension du code.
+
+	\section{Fichiers}
+		\subsection{Source.c}
+			Un ficher source est un fichier d'extension \verb+*.c+ ou \verb+*.cpp+; il doit forcement être accompagné d'un fichier header avec l'extension \verb+*.h+ (à l'exception du main qui peut s'en dispenser).
+
+			Un fichier source doit inclure tous les fichiers (\verb+*.h+) qui lui sont utiles, ainsi que son *.h personnel.
+
+			Il est de bon aloi de limiter la taille d'un fichier source. Nous préférerons avoir cinquante fichiers de 200 lignes qu'un fichier de 10 000 lignes. (Avec l'utilisation d'un makefile bien fait cela permet de réduire les durées de compilation).
+
+			Un fichier sources peut avoir plusieurs headers.
+
+		\subsection{Header.h}
+			Tous les fichiers headers doivent avoir des barrières d'inclusions (protection contre les inclusions récursives).
+			
+			Les barrières d'inclusions portent le nom du fichier, sans espaces, en MAJUSCULE, les points sont remplacés par des << \verb+_+ >> et elles commencent et ce terminent par un double underscroe << \verb+__+ >>.
+		
+			Un fichier d'en-tête doit avoir le même nom que le fichier source afférant, à l'exception de l'extension en *.h. Si un fichier source à plusieurs fichier d'en-tête, ils doivent clairement lui faire référence de par leur dénomination.
+			
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#ifndef __FUNCTION_H__
+					#define __FUNCTION_H__
+
+					...
+
+					#endif
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier function.h}
+			\end{figure}
+
+			Un fichier d'en-tête ne doit pas contenir de code (excepté des macros, plus de détails si après).
+
+	\section{Commentaires}
+		\subsection{Source}
+			Deux sortes de commentaires sont à différencier : ceux placés dans les codes sources (\verb+*.c+\/\verb+*.cpp+) doivent obligatoirement être mono-lignes, et ne servent qu'au développeur voulant reprendre votre code. Ce type de commentaire n'a pour visé que l'explication de zones locales du code ou de spécificités de conception (algorithme\/optimisation\/\dots). Les explications quand à l'utilisation d'une fonction ne se font pas dans le code source mais dans le header.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					int i = 0; // compteur de boucle
+					int j = 0; // compteur de boucle
+					char outFileAddr[20] = { 0 }; // adresse du fichier de sortie
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Déclaration des variables}
+			\end{figure}
+			
+		\subsection{Header}
+			Dans le header, nous trouverons des commentaires à destination du programmeur utilisant la fonction, nous aurons donc les explications sur les paramètres des fonctions, leurs retours ainsi que les bugs éventuels.
+
+			Nous utilisons le format Doxygen pour tous les commentaires situés dans les headers.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					////////////////////////////////////////////////////////////////////////////////
+					/// \file mallocND.h
+					/// \author ox223252
+					/// \date 2016-06
+					/// \version 0.0
+					////////////////////////////////////////////////////////////////////////////////
+
+					#include <stdlib.h>
+					#include <stdint.h>
+
+					////////////////////////////////////////////////////////////////////////////////
+					/// \fn int malloc2D ( const uint8_t sizeOfType , const uint64_t a,
+					/// 	const uint64_t b, void ***ptr );
+					/// \param[in] sizeOfType: nombre d'octet du type (sizeof(type))
+					/// \param[in] a: première dimension du tableau
+					/// \param[in] b: seconde dimension du tableau
+					/// \param[in/out] ptr: pointeur NULL sur le tableau de sortie
+					/// \return 0 succès
+					/// \return 1 pointeur non NULL
+					/// \return 2 valeur non géré pour sizeoftype
+					/// \brief alloue la mémoire pour un tableau deux dimensions ptr[a][b] de type 
+					/// 	paramétré par le "sizeOfType"
+					/// \author ox223252
+					/// \bug pas de bug connus
+					////////////////////////////////////////////////////////////////////////////////
+					int malloc2D ( const uint8_t sizeOfType , const uint64_t a, const uint64_t b, 
+					    void ***ptr );
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier mallocND.h}
+			\end{figure}
+
+			Les commentaires présents dans les headers doivent être taillés à 80 digits par ligne.
+		
+	\section{Define \& macros}
+		Attention les définition et macros sont à éviter cf section sur le Macros.
+
+		\subsection{Typographie}
+			Les définitions de constantes sont en MAJUSCULES. Les définitions de macros sont en MAJUSCULES.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#define FONCTION_DEBUG_TRACE(...) {printf(__VA_ARGS__);}
+					#define ARRAYSIZE 10
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Typographie de définitions}
+			\end{figure}
+
+		\subsection{Portée}
+			Les définitions et macros utiles que dans un seul fichier source doivent se trouver dans le dit fichier source.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#define FONCTION_DEBUG_TRACE(...) {printf(__VA_ARGS__);}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{fonction.c}
+			\end{figure}
+
+			Les définitions et macro relatives à un fichier source mais pouvant être appelées ailleurs dans le code doivent se trouver dans le fichier header.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#define ARRAYSIZE 10
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{fonction.h}
+			\end{figure}
+
+			Les macros ou définitions pouvant impacter tout le code peuvent être placées dans un fichier header qui n'aura que cette utilité.
+			
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#define MAX(x,y) ((x < y)?y:x)
+					#define PI 3.14159
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier define.h}
+			\end{figure}
+
+		\subsection{Typage}
+			Comme exprimé en début de paragraphe précédent, nous recommandons très vivement de ne pas utiliser de \verb+define+.
+
+			Pour les fonctions macroscopiques, elles peuvent être remplacées par des fonctions \verb+inline+. Cela permet la vérification des types et une plus grande sécurité quand à des effets de bord indésirables :
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					// deprecated
+					#define CARRE(x) ((x)*(x))
+					...
+					b = CARRE(a++); // b = ((a++)*(a++))
+					....
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Contre exemple d'utilisation du define pour des macros}
+				
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					inline int carre(x)
+					{
+					    return x * x;
+					}
+					...
+					b = carre(a++); // b = a*a; a++;
+					....
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemple d'utilisation du inline}
+			\end{figure}
+
+			De même que pour les macros, les définitions de constantes sont à supprimer au maximum au profit d’énumérations ou de variables \verb+static const+, cela permet au compilateur de faire les vérifications de typage.
+
+			De plus tout \verb+enum+ doit commencer par une racine identifiant la classe afin d’éviter les doublons.
+			
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#define ERROR_ADDR 0x01
+					#define ERROR_FLAG 0x02
+					#define TEMPO 12
+					...
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Contre exemple d'utilisation du define pour des constantes}
+				
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					typedef enum
+					{
+					    ERROR_CODE_OK, ///< retour normal
+					    ERROR_CODE_ADDR, ///< retour de fonction en cas d'adresse incorrecte
+					    ERROR_CODE_FLAG ///< retour de fonction en cas de flag incorrecte
+					}
+					ERROR_CODE;
+					const uint8_t TEMPO = 12; ///< temporisation après mise à HIGH du pin 13
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemple d'enum}
+			\end{figure}
+
+	\section{Variables}
+		\subsection{Typographie}
+			Les noms de variables doivent respecter la norme \verb+camelCase+, soit s'écrire en supprimant les espaces et en mettant la première lettre de chaque mot en MAJUSCULE excepté la première lettre du premier mot.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					int compteurDeBoucle = 0;
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+			\end{figure}
+
+			Les variables doivent avoir un nom explicite.
+
+			Les variables doivent avoir un nom de plus de deux lettres (excepté pour les compteurs de boucles locales, ils doivent néanmoins être commentés lors de leur déclaration).
+
+			Même si le nom de la variable est explicite, il est très fortement conseillé de déclarer chaque variable sur une ligne séparée en début de programme et d'expliquer son utilité.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					int i = 0; // compteur de boucle
+					int j = 0; // compteur de boucle
+					char outFileAddr[20]; // adresse du fichier de sortie
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Déclaration des variables}
+			\end{figure}
+			
+			Toutes les variables globales doivent être définies et initialisées dans les fichiers sources (\verb+*.c+) et doivent être préfixe par un \verb+g_+. Elles doivent être déclarées dans les headers en \verb+extern+, cela évitera les inclusions multiples et donc les multiples définitions.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					char *g_outputFolder = NULL;
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier fonction.c}
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#ifndef __FONCTION_H__
+					#define __FONCTION_H__
+					extern char *g_outputFolder; ///< nom du fichier de sortie
+					#endif
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier fonction.h}
+			\end{figure}
+
+			Si vous avez des variables << semi-globales >> (globales pour un seul fichier source), vous pouvez les déclarer dans le fichier source, mais lors de leur nommage ajoutez leur le préfixe : \verb+_<fileName>_varName+.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					char *_fonctions_outputFolderPath; ///< nom du dossier de sortie
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier fonctions.c}
+			\end{figure}
+
+		\subsection{Déclaration}
+			Les variables doivent être déclaré de façon à avoir la porté la plus courte possible, ainsi elles devront être déclaré juste avant leur utilisation.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					if ( ... )
+					{
+					    uint8_t variable = 0; // variable qui n'aura comme durée de vie que ce bloc de code
+					}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemples des types disponibles}
+			\end{figure}
+
+		\subsection{Initialisation}
+			Une variable, de même qu'un tableau mémoire, doit toujours être initialisée \sout{en début de programme} lors de sa déclaration.
+			
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					char *string = NULL; // pointeur initialisé à null
+					char *string2[20] = { 0 }; // zone mémoire initialisée à 0
+					uint32_t veleur = 0; // variable initialisée à zéro
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Initialisation}
+			\end{figure}
+
+			Même si par défaut beaucoup de compilateur initialise la mémoire à 0, il arrive que lors d'appels multiples à une fonction, une même variable se retrouve sur sa précédente zone mémoire et récupère sa précédente valeur. Il est donc nécessaire de fixer la valeur d'initialisation.
+
+		\subsection{Typage}
+			Pour chaque environnement définissant ses variables à sa guise, nous recommandons l'utilisation de types explicites définis dans la bibliothèque \verb+stdint.h+.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#include <stdint.h>
+
+					int8_t ///< entier signé sur 8 bits
+					uint8_t ///< entier non-signé sur 8 bits
+					int16_t ///< entier signé sur 16 bits
+					uint16_t ///< entier non-signé sur 16 bits
+					int32_t ///< entier signé sur 32 bits
+					uint32_t ///< entier non-signé sur 32 bits
+					int64_t ///< entier signé sur 64 bits
+					uint64_t ///< entier non-signé sur 64 bits
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemples des types disponibles}
+			\end{figure}
+
+		\subsection{Portée}
+			Les variables doivent être déclaré de façon à avoir la portée la plus courte possible, ainsi cette structure : 
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					uint8_t a = 0;
+					uint8_t tmp = 0;
+					if( ... )
+					{
+						tmp = ...;
+					}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+			\end{figure}
+
+			On préférera utiliser : 
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					uint8_t a = 0;
+					if( ... )
+					{
+						uint8_t tmp = ...;
+					}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+			\end{figure}
+
+			Les variables globales sont à éviter au maximum, si vous pouvez, les remplacer par des variables locales ou << semi-globales >> à défaut.
+
+		\subsection{Libération}
+			Pour les pointeurs, une fois la libération de la mémoire effectuée, il est nécessaire de remettre le pointeur à \verb+NULL+ manuellement, tous les compilateurs ne le font pas automatiquement.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					free ( ptr );
+					ptr = NULL;
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Libération d'un pointeur}
+			\end{figure}
+
+	\section{Fonctions}
+		\subsection{Typographie}
+			Les noms de fonctions doivent respecter la norme \verb+camelCase+, soit s'écrire en supprimant les espaces et en mettant la première lettre de chaque mot en MAJUSCULE excepté la première lettre du premier mot.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					int fonctionDeTest ( void )
+					{
+					    ...
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+			\end{figure}
+
+			Si une ou plusieurs fonction appartiennent à un \verb+objet+/\verb+class+ alors on pourra préfixer le nom de la fonction par le nom de l'objet avec un undersocre pour séparer les deux \verb+strings+.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					uint32_t actionManager_stepGetNext ( void );
+					uint32_t actionManager_stepGetAction ( void );
+					uint32_t actionManager_stepGeturrentAction ( void );
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+			\end{figure}
+
+			Les fonctions doivent avoir un nom explicite.
+
+		\subsection{Paramètres}
+			Les paramètres des fonctions doivent être au maximum passés en \verb+const+ et \verb+restrict+ quand c'est possible. 
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					int function ( const int * restrict a, int * restrict const b )
+					{
+					    ...
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+			\end{figure}
+
+		\subsection{Retour}
+			Utiliser le \verb+return+ pour un retour d'état (réussit, échoue avec un code d'erreur explicite), le retour 0 doit être le retour normal d'une fonction si tout se passe bien, seul les fonctions renvoyant une valeur \verb+max+/\verb+min+/\verb+countNbOfThing+ peuvent déroger à cette règle.
+
+			Il est donc de bon aloi de définir tous les retours possibles dans un \verb+enum+. Dans le cas d'une utilisation de \verb+errno+ avec les codes erreurs standard, il est acceptable de ne pas définir tous les codes erreurs, mais simplement retourner le numéro de ligne en cas d'echec.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					typedef enum
+					{
+					    ERROR_CODE_OK = 0,
+					    ERROR_CODE_ADDR,
+					    ERROR_CODE_FLAG
+					}
+					ERROR_CODE;
+					ERROR_CODE function ( const char *path, const int64_t param1 );
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier fonctions.h}
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					errno = EINVAL;
+					return ( __LINE__ );
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier fonctions.c}
+			\end{figure}
+
+		\subsection{portée}
+			Les fonctions dont la portée est limitée au fichier lui-même doivent être définies en \verb+static+, et ne doivent pas être déclarés dans le fichier header correspondant.
+
+	\section{Général}
+		\subsection{Parenthèses}
+			Dans les conditions, affectations et autres, on ne doit pas utiliser les règles mathématiques de priorité implicite mais définir clairement avec des parenthèses l'ordre d'exécution. Car selon les compilateurs, l'interprétation peut se faire différemment.
+
+			\sout{Seuls les opérations logiques de conditions peuvent utiliser les priorités implicites.}
+
+			Nous placerons un espace autour de chaque parenthèse.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					a = b >> 4 + c;
+					a = ( b >> 4 ) + c;
+					a = b >> ( 4 + c );
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Placement des parenthèses sur oppérations}
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					if ( ( a == 0 ) ||
+					    ( ( b > 10 ) &&
+					    ( b < 23 ) ) )
+					{
+					    ...
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Placement des parenthèses sur conditions}
+			\end{figure}
+
+		\subsection{Accolades}
+			Les accolades étant un grand sujet de dissension au sein des équipes de programmeurs, ici nous imposons que les accolades ouvrantes et fermantes doivent se trouver seules sur leur ligne (commentaires autorisés).
+
+			De plus toutes instructions conditionnelles ou de boucles doivent être suivies d'un bloc entre accolades même si cette instruction n'est suivi que d'une seule ligne.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					int main ( int argc, char **argv )
+					{
+					    if ( argc < 2 )
+					    { // commentaire autorisé si besoin
+					        printf ( "hey\n" );
+					    }
+					    else
+					    { // commentaire autorisé si besoin
+					        printf ( "ho\n" );
+					    }
+					    return ( 0 );
+					}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Placement des accolades}
+			\end{figure}
+
+			Ça évide le risque d’ajouter une instruction à la suite de l’indentation et de ne pas voir que cette instruction sera systématique.
+
+		\subsection{Indentation}
+			L'indentation doit se faire avec des tabulations de 4 éléments de largeur.
+
+			Nous n'utilisons pas les espaces pour indenter le code, à l’exception des headers (plus de détails ci après).
+
+		\subsection{Sizeof}
+			Utilisez de préférence \verb+sizeof ( varName )+ à \verb+sizeof ( type )+.
+
+			L'utilisation de \verb+sizeof ( varName )+ quand on cherche à connaître la taille d'un variable va permettre de ne pas dépendre de la définition de la variable (utile dans le cas pour le type de la variable change).
+
+		\subsection{structures}
+			Les structures utilisées que dans un seul et unique fichier source doivent être définies dans ce même fichier source.
+
+			Les structures afférentes à un fichier source mais utilisées ailleurs, doivent être définies dans le fichier header correspondant (\verb+*.h+) et documenté au format Doxygen.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#ifndef FONCTION_H
+					#define FONCTION_H
+
+					/// \typedef Point
+					/// \brief structure contenant les coordonnées d'un point
+					typedef struc _point
+					{
+					    int32_t x; ///< coordonnée X (largeur)
+					    int32_t y; ///< coordonnée Y (hauteur)
+					}
+					Point;
+
+					#endif
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier fonction.h}
+			\end{figure}
+
+	\section{Aide \& usage}
+		Vous devez quand vous écrivez un programme. Toujours ajouter un affichage d'aide quant à l'utilisation du dit programme, cet affichage sera aussi affiché en cas d'appel incorrect au programme.
+
+		L'aide doit être affiché dans tous les cas ou, le programme est appelé avec le mauvais nombre d'arguments, une commande invalide ou la commande d'aide.
+
+		Un programme nécessitant au minimum un argument doit dans le cas d'un appel sans argument afficher l'aide, ou un message indiquant comment avoir l'aide.
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				> ./monProgramme
+				use ./monProgramme -h
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Exemple de retour en cas d'appel invalide à un programme}
+		\end{figure}
+
+		Cet affichage doit indiquer : 
+		\begin{itemize}
+			\item le nom du programme,
+			\item l'utilité du programme,
+			\item le nombre d'arguments
+			\item à quoi correspond chaque argument
+			\item si un argument est optionnel ou non
+			\item toutes autres informations relatives aux arguments
+		\end{itemize}
+
+		Le nom du programme ne doit pas être codé en dur dans le logiciel mais récupéré de la ligne de commande.
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				int main ( int argc, char * argv[] )
+				{
+				    argv[ 0 ] // nom du programme
+				}
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Récupération du nom du programme}
+		\end{figure}
+
+		Attention ne pas utiliser les symboles\verb+[ ] < >+ ils ont une signification particulière décrite plus loin, de même les arguments de la ligne de commande ne doivent pas être séparés pas un virgule ou des points. Laissez la ligne d'exemple le plus proche possible de ce que l’utilisateur devrait saisir dans son terminal.
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				> ./monProgramme -h
+				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
+				usage: monProgramme inputFile outputFile
+				    inputFile : fichier de données utilisé en entré
+				    outputFile : fichier de sortie contenant les données traitées
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Exemple d'aide avec arguments obligatoires}
+		\end{figure}
+
+		Beaucoup de programmes utilisent des paramètres optionnels. Si un paramètre est optionnel il doit être encadré par des crochet \verb+[arg]+, vous pouvez avoir deux types de notation, la notation courte \verb+[-a]+, et la notation longue \verb+[--arg]+, un argument optionnel peut avoir son propre paramètre optionnel :
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				> ./monProgramme -h
+				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
+				usage: monProgramme inputFile outputFile [-a value ... ] [-v [-d]] [-h]
+				    inputFile : fichier de données utilisé en entré
+				    outputFile : fichier de sortie contenant les données traitées
+				    -a | --arg valeur ... : change la donnée d'entée (max 100 valeurs)
+				    -v | --verbose : affiche des informations durant le traitement
+				    -d : affiche plus de détail
+				    -h | --help : affiche cette page
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Exemple d'aide avec arguments optionnels}
+		\end{figure}
+
+		Si vous observez bien le mode \verb+debug+ \verb+-d+ n'est disponible que si et seulement si le mode \verb+verbose+ est activé \verb+-v+.
+
+		Si vous observez les paramètres, pour \verb+-a+ vous pouvez saisir plusieurs valeurs (\dots), il est donc obligatoire de vérifier le nombre et le contenu des arguments, pour vous assurer de leurs validités.
+
+		Les symboles \verb+< >+ peuvent être utilisés pour faire des redirections unix, ainsi :
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				monProgramme < inFile > outFile
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+		\end{figure}
+
+		Peut être interprété comme suit : 
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				./monProgramme < input_file > output_file
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+		\end{figure}
+
+		Cette commande utilise le contenu de \verb+input_file+ comme entrée standard plutôt que le \verb+stdin+ et utilise le fichier \verb+output_file+ à la place de \verb+stdout+. Pour cette raison les opérateur \verb+< >+ sont réservés aux redirection.
+			
+	\section{Condition}
+		\subsection{switch/case}
+			Un \verb+swich/case+ sur une valeur autre qu'un \verb+enum+ doit avoir une action \verb+default+.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					switch ( valeur )
+					{
+					    ...
+					    dafault:
+					    { // action par defaut
+					        break;
+					    }
+					}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Conditions multiples}
+			\end{figure}
+
+			Un \verb+swich/case+ sur un \verb+enum+ doit explicitement traiter tous les valeurs possibles de l'\verb+enum+ ou avoir une action \verb+default+.
+
+			Cela permet d’être plus souple quand à l'évolution d'une fonction
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					// fichier header
+					typedef enum
+					{
+					    ERROR_CODE_OK,
+					    ERROR_CODE_ADDR,
+					    ERROR_CODE_FLAG
+					}
+					ERROR_CODE;
+
+					ERROR_CODE function ( const char *path, const int64_t param1 );
+
+					// fichier source
+					switch ( function ( "path", param1 ) )
+					{
+					    case ERROR_CODE_OK:
+					    { // tout va bien dans le meilleur des mondes
+					        break;
+					    }
+					    case ERROR_CODE_ADDR:
+					    case ERROR_CODE_FLAG:
+					    dafault:
+					    { // error management
+					        break;
+					    }
+					}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Conditions multiples}
+			\end{figure}
+
+		\subsection{Instructions conditionnelles}
+			Une instruction conditionnelle à multiples éléments ne doit avoir qu'un élément de condition par ligne, permettant ainsi une meilleure lisibilité du code.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					if ( ( a == 0 ) ||
+					    ( ( b > 10 ) &&
+					    ( b < 23 ) ) )
+					{
+					...
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Conditions multiples}
+			\end{figure}
+
+	\section{Documentation}
+		Les commentaires placés dans les headers doivent être au format Doxygen. Ils doivent être écrits en Anglais avec le plus d'éléments d'explications possibles quant à l'utilisation du code, vous pouvez de plus en faire une traduction dans votre langue maternelle -- si votre langue maternelle n'est pas l'anglais -- comme dans l'exemple suivant :
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				#ifdef English_dox 
+				    /// Defined by the C++ standard library. 
+				#endif
+				#ifdef Spanish_dox
+				    /// Definido por la biblioteca estándar C++. 
+				#endif
+				#ifdef French_dox
+				    /// Définition pour la bibliotheque C++. 
+				#endif
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Doxygen multi-langues}
+		\end{figure}
+
+		Pour générer le Doxygen dans une seule langue, vous devrez dans le fichier Doxyfile définir quelle langue doit être utiliser pour la génération :
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				OUTPUT_LANGUAGE        = French
+				OUTPUT_DIRECTORY       = French
+				ENABLE_PREPROCESSING   = YES
+				MACRO_EXPANSION        = YES
+				PREDEFINED             = French_dox
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Doxygen Doxyfile}
+		\end{figure}
+
+		\subsection{Multi-langue}
+
+			Comme on peut le voir ici la documentation peut devenir très volumineuse, il est donc recommandé de séparer la documentation dans des fichiers headers différents pour chaque langues.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#ifndef __MALLOCNC_FR_H__
+					#define __MALLOCNC_FR_H__
+
+					#ifndef French_dox
+					#define French_dox
+					#endif
+
+					#ifdef French_dox
+					////////////////////////////////////////////////////////////////////////////////
+					/// \file mallocND.fr.h
+					/// \author ox223252
+					/// \date 2016-06
+					/// \version 0.0
+					////////////////////////////////////////////////////////////////////////////////
+
+					#include <stdlib.h>
+					#include <stdint.h>
+
+					////////////////////////////////////////////////////////////////////////////////
+					/// \fn int malloc2D ( const uint8_t sizeOfType , const uint64_t a,
+					/// 	const uint64_t b, void ***ptr );
+					/// \param[in] sizeOfType: nombre d'octet du type (sizeof(type))
+					/// \param[in] a : première dimension du tableau
+					/// \param[in] b : seconde dimension du tableau
+					/// \param[in/out] ptr : pointeur NULL sur le tableau de sortie
+					/// \return 0 suces
+					/// \return 1 pointeur non NULL
+					/// \return 2 valeur non gérée pour sizeoftype
+					/// \brief alloue la mémoire pour un tableau deux dimensions ptr[a][b] de type 
+					/// 	paramétré par le "sizeOfType"
+					/// \author ox223252
+					/// \bug pas de bug connus
+					////////////////////////////////////////////////////////////////////////////////
+					int malloc2D ( const uint8_t sizeOfType , const uint64_t a, const uint64_t b, 
+					    void ***ptr );
+					#endif
+					#endif
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier mallocND.fr.h}
+			\end{figure}
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					#ifndef __MALLOCNC_EN_H__
+					#define __MALLOCNC_EN_H__
+
+					#ifndef English_dox
+					#define English_dox
+					#endif
+
+					#ifdef English_dox
+					////////////////////////////////////////////////////////////////////////////////
+					/// \file mallocND.en.h
+					/// \author ox223252
+					/// \date 2016-06
+					/// \version 0.0
+					/// \copyright ox223252, 2016-06
+					////////////////////////////////////////////////////////////////////////////////
+
+					#include <stdlib.h>
+					#include <stdint.h>
+
+					////////////////////////////////////////////////////////////////////////////////
+					/// \fn int malloc2D ( const uint8_t sizeOfType , const uint64_t a,
+					/// 	const uint64_t b, void ***ptr );
+					/// \param[ in ] sizeOfType: type length (sizeof(type))
+					/// \param[ in ] a: first dimention of ptr array
+					/// \param[ in ] b: second dimention of ptr array
+					/// \param[ in/out ] ptr: NULL pointer on the out array
+					/// \return 0: succes
+					/// 	1: non NULL pointer
+					/// 	2: non valid value for sizeoftype
+					/// \brief allow memory for a 2D array ptr[ a ][ b ]
+					/// \author ox223252
+					/// \bug non bugs known
+					////////////////////////////////////////////////////////////////////////////////
+					int malloc2D ( const uint8_t sizeOfType , const uint64_t a, const uint64_t b, 
+					    void ***ptr );
+					#endif
+					#endif
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Fichier mallocND.en.h}
+			\end{figure}
+						
+		\subsection{Mots clés}
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tabular}{@{\extracolsep{\fill}} | c || l | }
+					\hline
+					\verb+\attention+ & débute un paragraphe "attention" \\ \hline
+					\verb+\author+ & pour donner le nom de l'auteur. \\ \hline
+					\verb+\brief+ & pour donner une description courte. \\ \hline
+					\verb+\code{type}+ & \\
+					\verb+    +\dots & place un bloc de code. \\
+					\verb+\endcode+ & \\ \hline
+					\verb+\copyright+ & pour indiquer un copyright. \\ \hline
+					\verb+\def+ & pour documenter un \verb+#define+. \\ \hline
+					\verb+\deprecated+ & pour spécifier qu'une fonction / variable\dots n'est plus utilisée. \\ \hline
+					\verb+\enum+ & pour documenter un type énuméré. \\ \hline
+					\verb+\example+ & pour écrire définir une fonction. \\ \hline
+					\verb+\file+ & pour documenter un fichier. \\ \hline
+					\verb+\fixme+ & pour indiquer un code défectueux, << à réparer >> \\ \hline
+					\verb+\fn+ & pour documenter une fonction. \\ \hline
+					\verb+\li+ & pour faire une puce. \\ \hline
+					\verb+\note+ & paragraphe de notes. \\ \hline
+					\verb+\par+ & [title] paragraphe. \\ \hline
+					\verb+\param+ & pour documenter un paramètre de fonction/méthode. \\ \hline
+					\verb+\remark+ & paragraphe de texte indenté. \\ \hline
+					\verb+\return+ & pour documenter les valeurs de retour d'une méthode/fonction. \\ \hline
+					\verb+\see+ & pour renvoyer le lecteur vers quelque chose (une fonction, une classe, un fichier\dots). \\ \hline
+					\verb+\since+ & pour faire une note de version (ex : disponible depuis\dots). \\ \hline
+					\verb+\struct+ & pour documenter une structure C. \\ \hline
+					\verb+\todo+ & pour indiquer une opération restant << à faire >>. \\ \hline
+					\verb+\typedef+ & pour documenter la définition d'un type. \\ \hline
+					\verb+\union+ & pour documenter une union C. \\ \hline
+					\verb+\var+ & pour documenter une variable / un typedef / un énuméré. \\ \hline
+					\verb+\version+ & pour donner le numéro de version. \\ \hline
+					\verb+\warning+ & pour attirer l'attention. \\ \hline
+				\end{tabular}
+				\end{changemargin}
+				\caption{Commandes Doxygen usuelles}
+			\end{figure}
+
+		\subsection{Formules Mathématiques}
+			Si dans une fonction vous utilisez des formules mathématiques devant être notées, pour informer l'utilisateur, ou pour des raisons de certifications, utilisez les formules \LaTeX, elles sont comprises par Doxygen :
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					The distance between \f$(x_1,y_1)\f$ and \f$(x_2,y_2)\f$ is 
+					    \f$\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}\f$.
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+					The distance between $(x_1,y_1)$ and $(x_2,y_2)$ is $\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemples de formules mathématiques (1)}
+			\end{figure}
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					\f[
+					    |I_2|=\left| \int_{0}^T \psi(t) 
+					            \left\{ 
+					                u(a,t)-
+					                \int_{\gamma(t)}^a 
+					                \frac{d\theta}{k(\theta,t)}
+					                \int_{a}^\theta c(\xi)u_t(\xi,t)\,d\xi
+					            \right\} dt
+					        \right|
+					\f]
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+					$ |I_2|=\left| \int_{0}^T \psi(t) 
+						\left\{ 
+							u(a,t)-
+							\int_{\gamma(t)}^a 
+							\frac{d\theta}{k(\theta,t)}
+							\int_{a}^\theta c(\xi)u_t(\xi,t)\,d\xi
+						\right\} dt
+					\right| $
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemples de formules mathématiques (2)}
+			\end{figure}
+
+			\begin{figure}[H]
+				\begin{tabular*}{\textwidth}{| c@{\extracolsep{\fill} } l@{\extracolsep{\fill}->} c |}
+					\hline
+					\verb+$ formule\ mathématique $+ & & $ formule\ mathématique $ \\ \hline
+					\verb+\int_{indice}^{exposant}+ & & $ \int_{indice}^{exposant} $ \\ \hline
+					\verb+\frac{diviseur}{dividende}+ & & $ \frac{diviseur}{dividende} $ \\ \hline
+					\verb+\left| valeur \right|+ & & $ \left| valeur \right| $ \\ \hline
+					\verb+{ valeur }+ & & $ { valeur } $ \\ \hline
+					\verb+\psi(a)+ & & $ \psi(a) $ \\ \hline
+					\verb+\theta(b)+ & & $ \theta(b) $ \\ \hline
+					\verb+\gamma(c)+ & & $ \gamma(c) $ \\ \hline
+					\verb+\xi(d)+ & & $ \xi(d) $ \\ \hline
+					\verb+\alpha(e)+ & & $ \alpha(e) $ \\ \hline
+					\verb+\beta(f)+ & & $ \beta(f) $ \\ \hline
+				\end{tabular*}
+				\caption{Mots clés}
+			\end{figure}
+
+			Vous pouvez définir  \verb+USE_MATHJAX+ pour avoir un meilleur rendu des formules :
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					USE_MATHJAX            = YES
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Doxygen Doxyfile}
+			\end{figure}

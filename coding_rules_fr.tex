@@ -1,0 +1,154 @@
+% Licence CC-BY-SA
+% produit par ox223252
+% document de base pour modification
+\documentclass{report}
+\usepackage{verbatim}   % permet d'utiliser verbatim
+\usepackage{tcolorbox}  % permet d'afficher des boites autour de certain element
+\usepackage[nobottomtitles*]{titlesec}   % permet de modifier les titres, l'option permet d'eviter le titre en fin de page
+\usepackage{graphicx}   % permet d'inclure des images
+\usepackage[utf8]{inputenc}     % permet de changer l'encodage
+\usepackage[T1]{fontenc}        % et d'utiliser le package frencais
+\usepackage[frenchb]{babel}     % utilisation des charactères français
+\usepackage{float}      % permet d'utiliser \begin{figure}[H]
+\usepackage{lscape}     % affichegage de page paysage
+\usepackage{pmboxdraw}  % pour afficher les charactere de tree
+\usepackage{amssymb,tikz,pdftexcmds,xparse}
+\usepackage{cite}       % permet les citations
+\usepackage{graphicx}   % for '\resizebox` macro
+\usepackage[babel=true]{csquotes}
+
+\usepackage{ulem}       % barrer du text \sout{Texte à barrer} \xout{Texte à hachurer}
+
+\titleformat{\chapter}[display]{\bfseries\Huge}{}{0em}{}[\vspace{-0.5em}]
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+
+\tikzset{
+	box/.style={
+		minimum size=0.225cm,
+		inner sep=0pt,
+		draw,
+	},
+	insert mark/.style={
+		append after command={
+			node[inner sep=0pt,#1]
+			at (\tikzlastnode.center){$\checkmark$}
+		}
+	},
+	insert bad mark/.style={
+		append after command={
+			[shorten <=\pgflinewidth,shorten >=\pgflinewidth]
+			(\tikzlastnode.north west)edge[#1](\tikzlastnode.south east)
+			(\tikzlastnode.south west)edge[#1](\tikzlastnode.north east)
+		}
+	},
+}
+\makeatletter
+\NewDocumentCommand{\tikzcheckmark}{O{} m}{
+	\ifnum\pdf@strcmp{#2}{mark}=\z@
+		\tikz[baseline=-0.5ex]\node[box,insert mark={#1},#1]{};
+	\fi
+	\ifnum\pdf@strcmp{#2}{bad mark}=\z@
+		\tikz[baseline=-0.5ex]\node[box,insert bad mark={#1},#1]{};
+	\fi
+	\ifnum\pdf@strcmp{#2}{no mark}=\z@
+		\tikz[baseline=-0.5ex]\node[box,#1]{};
+	\fi
+}
+\makeatother
+
+\newsavebox{\auteurbm}
+
+\newenvironment{extrait}[1]{\small\slshape
+\savebox{\auteurbm}{\upshape\sffamily#1}
+\begin{flushright}}{\\[4pt]\usebox{\auteurbm}
+\end{flushright}\normalsize\upshape}
+
+\newenvironment{extraitL}[1]{\small\slshape
+\savebox{\auteurbm}{\upshape\sffamily#1}
+\begin{flushleft}}{\\[4pt]\usebox{\auteurbm}
+\end{flushleft}\normalsize\upshape}
+
+\begin{document}
+	\begin{titlepage}
+		\begin{minipage}{0.4\textwidth}
+			\begin{flushleft}
+				\includegraphics[height=5cm]{res/imgs/ox}
+			\end{flushleft}
+		\end{minipage}
+		\begin{minipage}{0.4\textwidth}
+			\begin{flushright}
+				\begin{flushright}
+					\textsc{ox223252}
+				\end{flushright}
+			\end{flushright}
+		\end{minipage}
+		\vfill
+			\center\large\textsc{Coding Rules}
+			\center\textsc{[Fr]}
+		\vfill
+		\begin{minipage}{0.4\textwidth}
+			\begin{flushleft} \large
+			\end{flushleft}
+		\end{minipage}
+		\begin{minipage}{0.4\textwidth}
+			\begin{flushright}
+			\end{flushright}
+		\end{minipage}
+	\end{titlepage}
+
+	\pagenumbering{Roman}
+	\tableofcontents
+	\listoffigures
+
+	\newpage
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
+
+	\chapter{Préface}
+		Avant de rentrer dans le téchnique il y a quelques petites règles que tout programmeur devrait avoir en tête continuellement :
+
+		\begin{extrait}{Murphy}
+			Tout ce qui est susceptible de mal tourner tournera mal.
+		\end{extrait}
+
+		\begin{extraitL}{Murphy}
+			S'il y a plus d'une façon de faire quelque chose,\\
+			et que l'une d'elles conduit à un désastre, alors\\
+			il y aura quelqu'un pour le faire de cette façon.
+		\end{extraitL}
+
+		\begin{extrait}{LEM (Loi de l’Emmerdement Maximum)}
+			Quand quelque chose tourne mal, quelque chose de pire\\
+			arrive toujours à ce moment là.
+		\end{extrait}
+
+
+		\begin{extraitL}{Twain}
+			La catastrophe qui finit par arriver n'est jamais celle\\
+			à laquelle on s'est préparé.
+		\end{extraitL}
+
+
+		\begin{extrait}{Finagle}
+			S'il y a la moindre possibilité que ça rate, ça ratera ;\\
+			s'il n'y en a aucune, ça ratera quand même.
+		\end{extrait}
+		
+	\chapter{Général}
+		Pour tous les langages il est certaines règles qui devraient être appliquées autant que possible.
+
+		Un analyseur de code devrait être utilisé pendant le développement d'un logiciel ou d'une application quelque soit le langage. L'utilisation d'un outil d'analyse syntaxique de code (linter) du type \verb+JsLint+ (javascript) permet de vérifier le code afin d'éviter des erreurs ou omissions pouvant provoquer des dysfonctionnements et des difficultés à déboguer.
+
+		Une fois le code créé, un logiciel d'analyse dynamique type \verb+gdb+ ou \verb+valgrind+ (C/C++) devrait être utilisé pour vérifier la stabilité, les fuites mémoires et autres, vous évitant ainsi des omissions potentiellement coûteuses. 
+
+		Lors de l’écriture d'un programme, vous devez aussi penser à l’écriture de fonctions de tests unitaires, soit manuellement soit avec un outil d'automatisation, ainsi qu'à' l'utilisation d'un logiciel de couverture de code (code coverage), vous permettant de vérifier que vous avez testé toutes les parties importantes de votre code.
+
+		Vous augmenterez ainsi la qualité du code et que sa stabilité.
+
+		Attention, les règles de codage s'appliquent aux fichiers que vous écrivez pas à ceux des différentes librairies ou sources externes.
+
+	\input{coding_rules_C_fr}
+\end{document}
+
+
