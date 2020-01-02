@@ -1,0 +1,303 @@
+% Licence CC-BY-SA
+
+\chapter{JS}
+	\section{Commentaires}
+		Deux sortes de commentaires sont à différencier, les commentaires de développement doivent obligatoirement être mono-lignes, et ne servent qu'au programmeur voulant reprendre votre code, ce type de commentaire n'a pour visé que l'explication de zones locales de code ou de spécificités de conception (algorithme\/optimisation\/\dots), ils n'ont pas besoin de suivre une syntaxe spécifique. 
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				var i = 0; // compteur de boucle
+				var j = 0; // compteur de boucle
+				var outFileAddr = ""; // adresse du fichier de sortie
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Déclaration des variables}
+		\end{figure}
+
+		Les explications quand à l'utilisation d'une fonction se font en suivant le format Doxygen.
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				////////////////////////////////////////////////////////////////////////////////
+				/// \file monModule.js
+				/// \author ox223252
+				/// \date 2016-06
+				/// \version 0.0
+				////////////////////////////////////////////////////////////////////////////////
+
+				////////////////////////////////////////////////////////////////////////////////
+				/// \fn myFunction ( path, file, folder, callback );
+				/// \param[ in ] path: chemin du repertoir de travail
+				/// \param[ in ] file: fichier de donnée en entré
+				/// \param[ in ] folder: dossier de sortie
+				/// \param[ in ] callback: fonction de callback
+				/// \return 0 succes
+				/// \return 1 path invalide
+				/// \return 2 file invalide
+				/// \return 3 folder non vide
+				/// \brief fait quelque chose d'utile.
+				/// \author ox223252
+				/// \bug pas de bug connus
+				////////////////////////////////////////////////////////////////////////////////
+				function myFunction ( path, file, folder, callback )
+				{
+				    ...
+				}
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Fichier monModule.js}
+		\end{figure}
+	
+	\section{Les variables}
+		\subsection{Typographie}
+			Les noms de variables doivent respecter la norme \verb+camelCase+, soit s'écrire en supprimant les espaces et en mettant la première lettre de chaque mot en MAJUSCULE excepté la première lettre du premier mot.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					var compteurDeBoucle = 0;
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+			\end{figure}
+
+			Les variables doivent avoir un nom explicite.
+
+			Les variables doivent avoir un nom de plus de deux lettres (excepté pour les compteurs de boucles, ils doivent néanmoins être commenté lors de leur déclaration).
+
+			Même si le nom de la variable est explicite il est très fortement conseillé de déclarer chaque variable sur une ligne séparée en début de programme et d'expliquer son utilité.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					var i = 0; // compteur de boucle
+					var j = 0; // compteur de boucle
+					var outFileAddr = ""; // adresse du fichier de sortie
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Déclaration des variables}
+			\end{figure}
+			
+		\subsection{Globales}
+			L'usage de variables globales doit être évité au maximum : On distingue comme variable l'ensemble des types de données y compris les fonctions. Les variables déclarées globales ont une portée ( scope ) sur toute l'application et peuvent réécrire ou se faire réécrire par d'autres parties du code.
+
+			Améliore la maintenance et réduit le couplage entre les différentes parties d'une application.
+
+		\subsection{Locales}
+			Les variables locales doivent être déclarées à l'aide du mot clé \verb+var+. Cela empêche la déclaration d'une variable locale dans l'environnement global. Cette règle découle de la précédente.
+
+			Cela permet une meilleur maîtrise de la portée des variables.
+
+		\subsection{Parsing}
+			La base doit toujours être spécifiée lors de l'usage de parseInt, \verb+parseInt()+ accepte comme second argument la base de conversion. Définir cette base permet d'éviter des erreurs, en particulier si la chaîne commence par 0 ce qui aura pour effet une conversion en base 8 (octale).
+
+	\section{strict \& evals}
+		\subsection{mode strict}
+			Le mode \verb+strict+ doit être utilisé.
+
+			Depuis la version 5 d'Ecmascript ( Javascript 1.8.5), il est possible d'utiliser la directive \verb+use strict+ pour forcer l'exécution du code en mode strict. Ce mode permet de remonter des erreurs qui sont par défaut silencieuses.
+
+			Grâce à ce mode, on évite par exemple l'oublie du mot clé \verb+var+. Du fait que le javascript est un langage assez permissif, le mode strict augmente la sécurité du code.
+
+		\subsection{evals}
+			L'usage de \verb+eval()+ doit être évité. \verb+eval()+ permet de parser et d'évaluer une expression à travers une nouvelle instance de l'interpréteur javascript. Cette fonction est coûteuse en terme de performances mais peut surtout devenir une faille de sécurité importante.
+
+	\section{Les modules}
+		Les fichiers et / ou principales fonctionnalités d'un programme devraient être enrobées dans un module Cette règle rejoint la règle à propos des variables globales (cf ref 7.1). La portée d'un module étant limitée, on obtient une plus grande maîtrise du code et on évite aussi la propagation de variables à d'autres fonctions. On peut utiliser plusieurs méthodes pour y parvenir : AMD , CommonJS, ES6, objet en notation littérale, module pattern (IIFE).
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				// Cette exemple montre l'utilisation d'une IIFE pour réaliser un module
+				var monModule = (function ( o )
+				{
+				    function methodePrivee ( )
+				    {
+				        o.doSomthing();
+				    }
+
+				    function methodePrivee2 ( )
+				    {
+				        console.log ( "hello" );
+				    }
+
+				    return
+				    {
+				        methodePublique: function ( )
+				        {
+				            methodePrivee ( );
+				        }
+				    };
+				    // Exemple d'import d'un objet
+				})( obj );
+				monModule.methodePublique ( );
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Modules}
+		\end{figure}
+
+	\section{Règles de syntaxe}
+		\subsection{Parenthèses}
+			Dans les conditions, affectations et autres, on ne doit pas utiliser les règles mathématiques de priorité implicite mais définir clairement avec des parenthèses l'ordre d'exécution. Car selon les compilateurs, l'interprétation peut se faire différemment.
+
+			Seuls les opérations logiques de conditions peuvent utiliser les priorités implicites.
+
+			Nous placerons un espace autour de chaque parenthèse.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					a = b >> 4 + c;
+					a = ( b >> 4 ) + c;
+					a = b >> ( 4 + c );
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{placement des parenthèses sur oppérations}
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					if ( ( a == 0 ) ||
+					    ( b > 10 ) &&
+					    ( b < 23 ) )
+					{
+					    ...
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{placement des parenthèses sur conditions}
+			\end{figure}
+
+		\subsection{Accolades}
+			Toutes les instructions conditionnelles ou de boucles doivent toujours utiliser des accolades, même si cette instruction n'est suivit que d'une seule ligne. Délimiter une instruction par un bloc ( \verb+{}+ ) évite permet de clarifier l'instruction à exécuter pour le développeur ainsi que pour l'interpréteur.
+
+			Les accolades ouvrantes et fermantes doivent se trouver seules sur leur ligne (commentaires autorisés).
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					if ( value < 2 )
+					{ // commentaire autorisé si besoin
+					    console.log ( "hey" );
+					}
+					else
+					{ // commentaire autorisé si besoin
+					    console.log ( "ho" );
+					}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Placement des accolades}
+			\end{figure}
+
+		\subsection{Indentation}
+			L'indentation doit se faire avec des tabulations de 8 éléments de largeur.
+
+			Nous n'utilisons pas les espaces pour indenter le code.
+
+		\subsection{Notation littérale}
+			La notation littérale doit être utilisée pour créer des objets, tableaux, expressions régulières et primitives. Elle permet d'éviter de réécrire un objet original en cas d'omission de l'opérateur \verb+new+. Vous sécuriserez ainsi le code.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					// ecrire
+					var monObjet = {} ;
+					var monTableau = [] ;
+					// Plutot que
+					var monObjet = new Object() ;
+					var monTableau = new Array() ;
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{New objects}
+			\end{figure}
+
+		\subsection{l'égalité}
+			Par défaut, l'égalité strict doit être utilisée La strict égalité ( \verb+===+ ) permet de vérifier à la fois la valeur et le type. Dans le cas de la simple égalité ( \verb+==+ ), l'interpréteur essayera de faire correspondre le type des éléments comparés (coercition).
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					var a1 = ('1' == 1); // true
+					var a2 = ('1' === 1); // false
+					var a3 = ('true' == true); // true
+					var a4 = ('true' === true); // false
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{\'Egalité stricte}
+			\end{figure}
+
+			Ainsi vous aurez une plus grande maîtrise lors des comparaisons et éviterez des résultats non souhaités suite à une conversion de type automatique.
+
+		\subsection{Point virgule}
+			Une expression doit toujours se terminer par un point-virgule. Même si la syntaxe ne l'oblige pas, cette pratique limite le risque d'erreurs, permet la minification et une meilleur analyse de la qualité du code.
+
+	\section{Navigateur}
+		Règles appliquées au javascript coté navigateur.
+
+		Les scripts javascript doivent être placés dans des fichiers externes. Le javascript dans des fichiers séparés permet de correctement distinguer le code source du corps de page HTML, et ainsi avoir une meilleur maintenabilité.
+
+		Les scripts javascript doivent être appelés de préférence en fin de page. L'interprétation d'un fichier HTML par le navigateur est linéaire et bloquante, de cet fait, appeler les fichiers sources en bas de page rend l’affichage initial de la page plus rapide et permet d'éviter l'appel à des événements de type onReady.
+
+		Dans le cas d'un code qui doit interagir avec la page avant l’affichage complet du DOM, on pourra placer ce script dans l'en-tête.
+
+		Ceci améliore la lisibilité et augmentation des performances.
+
+	\section{Performances}
+		\subsection{Selecteurs}
+			Les sélecteurs doivent être mis en cache lors d'un usage répété L'interaction avec le DOM est lente. Lors de l'usage répété d'un sélecteur, il convient de le mettre en cache pour éviter de retraverser le DOM. 
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					// Mauvais
+					for (var i = 0; i < 10000; i++)
+					{
+					    $('#container').html(i);
+					}
+					// Bon
+					var monElement = $('#container')
+					for (var i = 0; i < 10000; i++)
+					{
+					    monElement.html(i);
+					}
+					//Meilleur ( usage d'un sélecteur natif )
+					var monElement = document.getElementById(container)
+					for (var i = 0; i < 10000; i++)
+					{
+					    monElement.innerHTML = i;
+					}
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Selecteur}
+			\end{figure}
+
+			Vous augmenterez ainsi les performances.
+
+		\subsection{Bibliotheques}
+			Lorsque cela est possible, les fonctions natives du DOM doivent être utilisées Les navigateurs ont atteint une maturité qui permet de se passer de bibliothèques spécialisées dans la plupart des cas courants (sélection d'éléments, interaction avec le DOM, appels AJAX). C'est particulièrement vrai pour la sélection d'éléments du DOM. L'usage d'une bibliothèque externe telle que jQuery uniquement dans ce but est inutile aujourd'hui.
+
+			Ainsi vous pourrez limiter la complexité du code et la dépendance à des bibliothèques externes.
+
+		\subsection{Document.write()}
+			La fonction \verb+document.write()+ ne devrait pas être utilisée. Cette fonction modifie le DOM pendant la lecture de la page par le navigateur. Cela peut porter à confusion et potentiellement bloquer le rendu de la page. Il est préférable d'utiliser des fonctions de manipulation du DOM une fois la page totalement chargée. Son usage doit être limité à des cas particuliers.
