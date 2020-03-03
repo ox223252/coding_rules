@@ -70,7 +70,7 @@
 
 			Les variables doivent avoir un nom explicite.
 
-			Les variables doivent avoir un nom de plus de deux lettres (excepté pour les compteurs de boucles, ils doivent néanmoins être commenté lors de leur déclaration).
+			Les variables doivent avoir un nom de plus de deux lettres (excepté pour les compteurs de boucles, ils doivent néanmoins être commentés lors de leur déclaration).
 
 			Même si le nom de la variable est explicite il est très fortement conseillé de déclarer chaque variable sur une ligne séparée en début de programme et d'expliquer son utilité.
 
@@ -88,9 +88,9 @@
 			\end{figure}
 			
 		\subsection{Globales}
-			L'usage de variables globales doit être évité au maximum : On distingue comme variable l'ensemble des types de données y compris les fonctions. Les variables déclarées globales ont une portée ( scope ) sur toute l'application et peuvent réécrire ou se faire réécrire par d'autres parties du code.
+			L'usage de variables globales doit être évitée au maximum : On distingue comme variable l'ensemble des types de données y compris les fonctions. Les variables déclarées globales ont une portée ( scope ) sur toute l'application et peuvent réécrire ou se faire réécrire par d'autres parties du code.
 
-			Améliore la maintenance et réduit le couplage entre les différentes parties d'une application.
+			Eviter leur usage améliore la maintenance et réduit le couplage entre les différentes parties d'une application.
 
 		\subsection{Locales}
 			Les variables locales doivent être déclarées à l'aide du mot clé \verb+var+. Cela empêche la déclaration d'une variable locale dans l'environnement global. Cette règle découle de la précédente.
@@ -98,7 +98,7 @@
 			Cela permet une meilleur maîtrise de la portée des variables.
 
 		\subsection{Parsing}
-			La base doit toujours être spécifiée lors de l'usage de parseInt, \verb+parseInt()+ accepte comme second argument la base de conversion. Définir cette base permet d'éviter des erreurs, en particulier si la chaîne commence par 0 ce qui aura pour effet une conversion en base 8 (octale).
+			La base doit toujours être spécifiée lors de l'usage de parseInt. \verb+parseInt()+ accepte comme second argument la base de conversion. Définir cette base permet d'éviter des erreurs, en particulier si la chaîne commence par 0 ce qui aura pour effet une conversion en base 8 (octale).
 
 	\section{strict \& evals}
 		\subsection{mode strict}
@@ -106,7 +106,7 @@
 
 			Depuis la version 5 d'Ecmascript ( Javascript 1.8.5), il est possible d'utiliser la directive \verb+use strict+ pour forcer l'exécution du code en mode strict. Ce mode permet de remonter des erreurs qui sont par défaut silencieuses.
 
-			Grâce à ce mode, on évite par exemple l'oublie du mot clé \verb+var+. Du fait que le javascript est un langage assez permissif, le mode strict augmente la sécurité du code.
+			Grâce à ce mode, on évite par exemple l'oubli du mot clé \verb+var+. Du fait que le javascript est un langage assez permissif, le mode strict augmente la sécurité du code.
 
 		\subsection{evals}
 			L'usage de \verb+eval()+ doit être évité. \verb+eval()+ permet de parser et d'évaluer une expression à travers une nouvelle instance de l'interpréteur javascript. Cette fonction est coûteuse en terme de performances mais peut surtout devenir une faille de sécurité importante.
@@ -182,7 +182,7 @@
 			\end{figure}
 
 		\subsection{Accolades}
-			Toutes les instructions conditionnelles ou de boucles doivent toujours utiliser des accolades, même si cette instruction n'est suivit que d'une seule ligne. Délimiter une instruction par un bloc ( \verb+{}+ ) évite permet de clarifier l'instruction à exécuter pour le développeur ainsi que pour l'interpréteur.
+			Toutes les instructions conditionnelles ou de boucles doivent toujours utiliser des accolades, même si cette instruction n'est suivie que d'une seule ligne. Délimiter une instruction par un bloc ( \verb+{}+ ) permet de clarifier l'instruction à exécuter pour le développeur ainsi que pour l'interpréteur.
 
 			Les accolades ouvrantes et fermantes doivent se trouver seules sur leur ligne (commentaires autorisés).
 
@@ -229,7 +229,7 @@
 			\end{figure}
 
 		\subsection{l'égalité}
-			Par défaut, l'égalité strict doit être utilisée La strict égalité ( \verb+===+ ) permet de vérifier à la fois la valeur et le type. Dans le cas de la simple égalité ( \verb+==+ ), l'interpréteur essayera de faire correspondre le type des éléments comparés (coercition).
+			Par défaut, l'égalité stricte doit être utilisée. La stricte égalité ( \verb+===+ ) permet de vérifier à la fois la valeur et le type. Dans le cas de la simple égalité ( \verb+==+ ), l'interpréteur essayera de faire correspondre le type des éléments comparés (coercition).
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -263,7 +263,7 @@
 
 	\section{Performances}
 		\subsection{Selecteurs}
-			Les sélecteurs doivent être mis en cache lors d'un usage répété L'interaction avec le DOM est lente. Lors de l'usage répété d'un sélecteur, il convient de le mettre en cache pour éviter de retraverser le DOM. 
+			Les sélecteurs doivent être mis en cache lors d'un usage répété. L'interaction avec le DOM est lente. Lors de l'usage répété d'un sélecteur, il convient de le mettre en cache pour éviter de retraverser le DOM.
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -295,7 +295,7 @@
 			Vous augmenterez ainsi les performances.
 
 		\subsection{Bibliotheques}
-			Lorsque cela est possible, les fonctions natives du DOM doivent être utilisées Les navigateurs ont atteint une maturité qui permet de se passer de bibliothèques spécialisées dans la plupart des cas courants (sélection d'éléments, interaction avec le DOM, appels AJAX). C'est particulièrement vrai pour la sélection d'éléments du DOM. L'usage d'une bibliothèque externe telle que jQuery uniquement dans ce but est inutile aujourd'hui.
+			Lorsque cela est possible, les fonctions natives du DOM doivent être utilisées. Les navigateurs ont atteint une maturité qui permet de se passer de bibliothèques spécialisées dans la plupart des cas courants (sélection d'éléments, interaction avec le DOM, appels AJAX). C'est particulièrement vrai pour la sélection d'éléments du DOM. L'usage d'une bibliothèque externe telle que jQuery uniquement dans ce but est inutile aujourd'hui.
 
 			Ainsi vous pourrez limiter la complexité du code et la dépendance à des bibliothèques externes.
 
