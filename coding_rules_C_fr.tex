@@ -50,7 +50,7 @@
 				\end{figure}
 
 			\subsubsection{Arborescence}
-				Un projet doit contenir un dossier \verb+src+ et un \verb+makefile+ et/ou un \verb+configure+, l'exécutable doit être généré dans un second dossier \verb+bin+, de plus, il peut être adjoint un dossier \verb+doc+ qui contiendra la documentation, un dossier \verb+res+ qui contiendra les fichiers utile au fonctionnement de l’exécutable (fichiers de config/données/\dots), \verb+lib+ pour les fichiers nécessaires à la compilation, autre que les codes sources.
+				Un projet doit contenir un dossier \verb+src+ et un \verb+makefile+ et/ou un \verb+configure+, l'exécutable doit être généré dans un second dossier \verb+bin+. De plus, il peut être adjoint un dossier \verb+doc+ qui contiendra la documentation, un dossier \verb+res+ qui contiendra les fichiers utile au fonctionnement de l’exécutable (fichiers de config/données/\dots), \verb+lib+ pour les fichiers nécessaires à la compilation, autre que les codes sources.
 				
 				\begin{figure}[H]
 					\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -71,24 +71,24 @@
 			\subsubsection{Sous arborescence}
 				Les fichiers sources doivent être dispatchés dans des sous dossiers de façon à séparer les éléments du code en les regroupant par catégorie.
 
-				Le nombre de sous répertoires ainsi que leurs profondeur n'est pas limité, mais ne doit pas nuire à la compréhension du code.
+				Le nombre de sous répertoires ainsi que leurs profondeur est sans limite. Cependant la compréhension du code doit rester claire.
 
 	\section{Fichiers}
 		\subsection{Source.c}
-			Un ficher source est un fichier d'extension \verb+*.c+ ou \verb+*.cpp+; il doit forcement être accompagné d'un fichier header avec l'extension \verb+*.h+ (à l'exception du main qui peut s'en dispenser).
+			Un ficher source est un fichier d'extension \verb+*.c+ ou \verb+*.cpp+; il doit forcément être accompagné d'un fichier header avec l'extension \verb+*.h+ (à l'exception du main qui peut s'en dispenser).
 
 			Un fichier source doit inclure tous les fichiers (\verb+*.h+) qui lui sont utiles, ainsi que son *.h personnel.
 
 			Il est de bon aloi de limiter la taille d'un fichier source. Nous préférerons avoir cinquante fichiers de 200 lignes qu'un fichier de 10 000 lignes. (Avec l'utilisation d'un makefile bien fait cela permet de réduire les durées de compilation).
 
-			Un fichier sources peut avoir plusieurs headers.
+			Un fichier source peut avoir plusieurs headers.
 
 		\subsection{Header.h}
 			Tous les fichiers headers doivent avoir des barrières d'inclusions (protection contre les inclusions récursives).
 			
-			Les barrières d'inclusions portent le nom du fichier, sans espaces, en MAJUSCULE, les points sont remplacés par des << \verb+_+ >> et elles commencent et ce terminent par un double underscroe << \verb+__+ >>.
+			Les barrières d'inclusions portent le nom du fichier, sans espaces, en MAJUSCULE, les points sont remplacés par des << \verb+_+ >> et elles commencent et se terminent par un double underscore << \verb+__+ >>.
 		
-			Un fichier d'en-tête doit avoir le même nom que le fichier source afférant, à l'exception de l'extension en *.h. Si un fichier source à plusieurs fichier d'en-tête, ils doivent clairement lui faire référence de par leur dénomination.
+			Un fichier d'en-tête doit avoir le même nom que le fichier source afférant, à l'exception de l'extension en *.h. Si un fichier source à plusieurs fichiers d'en-tête, ils doivent clairement lui faire référence de par leur dénomination.
 			
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -231,7 +231,7 @@
 		\subsection{Typage}
 			Comme exprimé en début de paragraphe précédent, nous recommandons très vivement de ne pas utiliser de \verb+define+.
 
-			Pour les fonctions macroscopiques, elles peuvent être remplacées par des fonctions \verb+inline+. Cela permet la vérification des types et une plus grande sécurité quand à des effets de bord indésirables :
+			Pour les fonctions macroscopiques, elles peuvent être remplacées par des fonctions \verb+inline+. Cela permet la vérification des types et une plus grande sécurité quant à des effets de bord indésirables :
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -264,9 +264,9 @@
 				\caption{Exemple d'utilisation du inline}
 			\end{figure}
 
-			De même que pour les macros, les définitions de constantes sont à supprimer au maximum au profit d’énumérations ou de variables \verb+static const+, cela permet au compilateur de faire les vérifications de typage.
+			De même que pour les macros, les définitions de constantes sont à supprimer au maximum au profit d’énumérations ou de variables \verb+static const+. Cela permet au compilateur de faire les vérifications de typage.
 
-			De plus tout \verb+enum+ doit commencer par une racine identifiant la classe afin d’éviter les doublons.
+			De plus, tout \verb+enum+ doit commencer par une racine identifiant la classe afin d’éviter les doublons.
 			
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -314,7 +314,7 @@
 
 			Les variables doivent avoir un nom explicite.
 
-			Les variables doivent avoir un nom de plus de deux lettres (excepté pour les compteurs de boucles locales, ils doivent néanmoins être commentés lors de leur déclaration).
+			Les variables doivent avoir un nom de plus de deux lettres (excepté pour les compteurs de boucles locales. Elles doivent néanmoins être commentées lors de leur déclaration).
 
 			Même si le nom de la variable est explicite, il est très fortement conseillé de déclarer chaque variable sur une ligne séparée en début de programme et d'expliquer son utilité.
 
@@ -370,7 +370,7 @@
 			\end{figure}
 
 		\subsection{Déclaration}
-			Les variables doivent être déclaré de façon à avoir la porté la plus courte possible, ainsi elles devront être déclaré juste avant leur utilisation.
+			Les variables doivent être déclarées de façon à avoir la portée la plus courte possible, ainsi elles devront être déclarées juste avant leur utilisation.
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -387,7 +387,7 @@
 			\end{figure}
 
 		\subsection{Initialisation}
-			Une variable, de même qu'un tableau mémoire, doit toujours être initialisée \sout{en début de programme} lors de sa déclaration.
+			Une variable, de même qu'un tableau mémoire, doit toujours être initialisé \sout{en début de programme} lors de sa déclaration.
 			
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -402,7 +402,7 @@
 				\caption{Initialisation}
 			\end{figure}
 
-			Même si par défaut beaucoup de compilateur initialise la mémoire à 0, il arrive que lors d'appels multiples à une fonction, une même variable se retrouve sur sa précédente zone mémoire et récupère sa précédente valeur. Il est donc nécessaire de fixer la valeur d'initialisation.
+			Même si par défaut beaucoup de compilateurs initialisent la mémoire à 0, il arrive que lors d'appels multiples à une fonction, une même variable se retrouve sur sa précédente zone mémoire et récupère sa précédente valeur. Il est donc nécessaire de fixer la valeur d'initialisation.
 
 		\subsection{Typage}
 			Pour chaque environnement définissant ses variables à sa guise, nous recommandons l'utilisation de types explicites définis dans la bibliothèque \verb+stdint.h+.
@@ -428,7 +428,7 @@
 			\end{figure}
 
 		\subsection{Portée}
-			Les variables doivent être déclaré de façon à avoir la portée la plus courte possible, ainsi cette structure : 
+			Les variables doivent être déclarées de façon à avoir la portée la plus courte possible. Ainsi, pour cette structure :
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -464,7 +464,7 @@
 			Les variables globales sont à éviter au maximum, si vous pouvez, les remplacer par des variables locales ou << semi-globales >> à défaut.
 
 		\subsection{Libération}
-			Pour les pointeurs, une fois la libération de la mémoire effectuée, il est nécessaire de remettre le pointeur à \verb+NULL+ manuellement, tous les compilateurs ne le font pas automatiquement.
+			Pour les pointeurs, une fois la libération de la mémoire effectuée, il est nécessaire de remettre le pointeur à \verb+NULL+ manuellement. Tous les compilateurs ne le font pas automatiquement.
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -494,7 +494,7 @@
 				\end{changemargin}
 			\end{figure}
 
-			Si une ou plusieurs fonction appartiennent à un \verb+objet+/\verb+class+ alors on pourra préfixer le nom de la fonction par le nom de l'objet avec un undersocre pour séparer les deux \verb+strings+.
+			Si une ou plusieurs fonction appartiennent à un \verb+objet+/\verb+class+ alors on pourra préfixer le nom de la fonction par le nom de l'objet avec un underscore pour séparer les deux \verb+strings+.
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -559,7 +559,7 @@
 			\end{figure}
 
 		\subsection{portée}
-			Les fonctions dont la portée est limitée au fichier lui-même doivent être définies en \verb+static+, et ne doivent pas être déclarés dans le fichier header correspondant.
+			Les fonctions dont la portée est limitée au fichier lui-même doivent être définies en \verb+static+, et ne doivent pas être déclarées dans le fichier header correspondant.
 
 	\section{Général}
 		\subsection{Parenthèses}
@@ -635,7 +635,7 @@
 			L'utilisation de \verb+sizeof ( varName )+ quand on cherche à connaître la taille d'un variable va permettre de ne pas dépendre de la définition de la variable (utile dans le cas pour le type de la variable change).
 
 		\subsection{structures}
-			Les structures utilisées que dans un seul et unique fichier source doivent être définies dans ce même fichier source.
+			Les structures utilisées dans un seul et unique fichier source doivent être définies dans ce même fichier source.
 
 			Les structures afférentes à un fichier source mais utilisées ailleurs, doivent être définies dans le fichier header correspondant (\verb+*.h+) et documenté au format Doxygen.
 
@@ -663,9 +663,9 @@
 			\end{figure}
 
 	\section{Aide \& usage}
-		Vous devez quand vous écrivez un programme. Toujours ajouter un affichage d'aide quant à l'utilisation du dit programme, cet affichage sera aussi affiché en cas d'appel incorrect au programme.
+		Vous devez quand vous écrivez un programme, toujours ajouter une notice d'aide quant à l'utilisation du dit programme. Cette notice sera aussi affichée en cas d'appel incorrect au programme.
 
-		L'aide doit être affiché dans tous les cas ou, le programme est appelé avec le mauvais nombre d'arguments, une commande invalide ou la commande d'aide.
+		L'aide doit être affichée dans tous les cas ou, le programme est appelé avec le mauvais nombre d'arguments, une commande invalide ou la commande d'aide.
 
 		Un programme nécessitant au minimum un argument doit dans le cas d'un appel sans argument afficher l'aide, ou un message indiquant comment avoir l'aide.
 
@@ -688,7 +688,7 @@
 			\item le nombre d'arguments
 			\item à quoi correspond chaque argument
 			\item si un argument est optionnel ou non
-			\item toutes autres informations relatives aux arguments
+			\item toute autre information relative aux arguments
 		\end{itemize}
 
 		Le nom du programme ne doit pas être codé en dur dans le logiciel mais récupéré de la ligne de commande.
@@ -707,7 +707,7 @@
 			\caption{Récupération du nom du programme}
 		\end{figure}
 
-		Attention ne pas utiliser les symboles\verb+[ ] < >+ ils ont une signification particulière décrite plus loin, de même les arguments de la ligne de commande ne doivent pas être séparés pas un virgule ou des points. Laissez la ligne d'exemple le plus proche possible de ce que l’utilisateur devrait saisir dans son terminal.
+		Attention: ne pas utiliser les symboles\verb+[ ] < >+ ils ont une signification particulière décrite plus loin, de même les arguments de la ligne de commande ne doivent pas être séparés pas un virgule ou des points. Laissez la ligne d'exemple le plus proche possible de ce que l’utilisateur devrait saisir dans son terminal.
 
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -716,7 +716,7 @@
 				> ./monProgramme -h
 				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
 				usage: monProgramme inputFile outputFile
-				    inputFile : fichier de données utilisé en entré
+				    inputFile : fichier de données utilisé en entrée
 				    outputFile : fichier de sortie contenant les données traitées
 			\end{verbatim}
 			\end{tcolorbox}
@@ -724,7 +724,7 @@
 			\caption{Exemple d'aide avec arguments obligatoires}
 		\end{figure}
 
-		Beaucoup de programmes utilisent des paramètres optionnels. Si un paramètre est optionnel il doit être encadré par des crochet \verb+[arg]+, vous pouvez avoir deux types de notation, la notation courte \verb+[-a]+, et la notation longue \verb+[--arg]+, un argument optionnel peut avoir son propre paramètre optionnel :
+		Beaucoup de programmes utilisent des paramètres optionnels. Si un paramètre est optionnel il doit être encadré par des crochet \verb+[arg]+, vous pouvez avoir deux types de notation: la notation courte \verb+[-a]+, et la notation longue \verb+[--arg]+. un argument optionnel peut avoir son propre paramètre optionnel :
 
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -773,7 +773,7 @@
 			\end{changemargin}
 		\end{figure}
 
-		Cette commande utilise le contenu de \verb+input_file+ comme entrée standard plutôt que le \verb+stdin+ et utilise le fichier \verb+output_file+ à la place de \verb+stdout+. Pour cette raison les opérateur \verb+< >+ sont réservés aux redirection.
+		Cette commande utilise le contenu de \verb+input_file+ comme entrée standard plutôt que le \verb+stdin+ et utilise le fichier \verb+output_file+ à la place de \verb+stdout+. Pour cette raison les opérateurs \verb+< >+ sont réservés aux redirections.
 			
 	\section{Condition}
 		\subsection{switch/case}
@@ -855,7 +855,7 @@
 			\end{figure}
 
 	\section{Documentation}
-		Les commentaires placés dans les headers doivent être au format Doxygen. Ils doivent être écrits en Anglais avec le plus d'éléments d'explications possibles quant à l'utilisation du code, vous pouvez de plus en faire une traduction dans votre langue maternelle -- si votre langue maternelle n'est pas l'anglais -- comme dans l'exemple suivant :
+		Les commentaires placés dans les headers doivent être au format Doxygen. Ils doivent être écrits en Anglais avec le plus d'éléments d'explications possibles. Quant à l'utilisation du code, vous pouvez de plus en faire une traduction dans votre langue maternelle -- si votre langue maternelle n'est pas l'anglais -- comme dans l'exemple suivant :
 
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -876,7 +876,7 @@
 			\caption{Doxygen multi-langues}
 		\end{figure}
 
-		Pour générer le Doxygen dans une seule langue, vous devrez dans le fichier Doxyfile définir quelle langue doit être utiliser pour la génération :
+		Pour générer le Doxygen dans une seule langue, vous devrez dans le fichier Doxyfile définir quelle langue doit être utilisée pour la génération :
 
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -895,7 +895,7 @@
 
 		\subsection{Multi-langue}
 
-			Comme on peut le voir ici la documentation peut devenir très volumineuse, il est donc recommandé de séparer la documentation dans des fichiers headers différents pour chaque langues.
+			Comme on peut le voir ici, la documentation peut devenir très volumineuse, il est donc recommandé de séparer la documentation dans des fichiers headers différents pour chaque langues.
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
@@ -926,7 +926,7 @@
 					/// \param[in] a : première dimension du tableau
 					/// \param[in] b : seconde dimension du tableau
 					/// \param[in/out] ptr : pointeur NULL sur le tableau de sortie
-					/// \return 0 suces
+					/// \return 0 success
 					/// \return 1 pointeur non NULL
 					/// \return 2 valeur non gérée pour sizeoftype
 					/// \brief alloue la mémoire pour un tableau deux dimensions ptr[a][b] de type 
@@ -974,7 +974,7 @@
 					/// \param[ in ] a: first dimention of ptr array
 					/// \param[ in ] b: second dimention of ptr array
 					/// \param[ in/out ] ptr: NULL pointer on the out array
-					/// \return 0: succes
+					/// \return 0: success
 					/// 	1: non NULL pointer
 					/// 	2: non valid value for sizeoftype
 					/// \brief allow memory for a 2D array ptr[ a ][ b ]
