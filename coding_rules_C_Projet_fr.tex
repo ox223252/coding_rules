@@ -1,0 +1,174 @@
+\section{Projet}
+	Nous conseillons (pour ne pas dire nous imposons), de ne pas utiliser d'IDE\footnote{logiciel qui cache des éléments de compilation et autres}, pour la compilation d'un programme. Un makefile (ou autre outils libre/OpenSource tel Cmake) est conseillé, couplé avec un éditeur de texte.
+
+	Nous souhaitons qu'un simple \verb+make+ à la base de l'arborescence permette de compiler le code.
+
+	\subsection{Avec un IDE}
+		Bien que nous demandons un travail dans IDE certain préfèrent quand même en utiliser un. L'utilisation d'un IDE permet de prendre des libertés sur le propreté et la gestion du projet. Vous ne devez en aucun cas vous autoriser à du laxisme dans la gestion de vos travaux, dans le cas contraire ils deviendrons rapidement d'une complexité affolante et impossible à suivre ou reprendre pour un nouveau développeur.
+
+	\subsection{Pas d'IDE}
+		\subsubsection{Makefile}
+			Le makefile à la racine de votre projet doit comporter comme première directive \verb+all:+ qui permet de compiler tout votre projet, ainsi qu'une directive \verb+mrproper+ qui doit permettre de supprimer tous les fichiers générés automatiquement (\verb+*.o+, \verb+exec+).
+
+			La compilation doit se faire en \verb+-Wall+ sans que cela n’affiche le moindre warning car un warning est un bug potentiel.
+
+			Un exemple de \verb+makefile+ de base :
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					SOURCE = src
+					ROOT_DIR = bin
+					EXEC = execName
+					CCFLAGS = -Wall
+					CXXFLAGS = -Wall
+					CPP_SRC=$(shell find $(SOURCE) -name *.cpp)
+					CPP_OBJ=$(CPP_SRC:.cpp=.o)
+					C_SRC=$(shell find $(SOURCE) -name *.c)
+					C_OBJ=$(C_SRC:.c=.o)
+					OBJ=$(C_OBJ) $(CPP_OBJ)
+
+					all: makedeps $(ROOT_DIR)/$(EXEC)
+					$(ROOT_DIR)/$(EXEC): $(OBJ)
+					    $(CXX) -o $@ $^ $(LDFLAGS)
+					%.o: %.c
+					    $(CC) -c -o $@ $< $(CCFLAGS)
+					%.o: %.cpp
+					    $(CXX) -c -o $@ $< $(CXXFLAGS)
+					clean:
+					    rm -f $(shell find $(SOURCE) -name *.o)
+					    rm -f $(shell find $(SOURCE) -name *.so)
+					mrproper: clean cleanDump
+					    rm -f $(ROOT_DIR)/$(EXEC)
+					makedeps:
+					    @makedepend -Y $(C_SRC) $(CPP_SRC) 2> /dev/null
+				    #
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Makefile}
+			\end{figure}
+
+		\subsubsection{Cmake}
+			À faire
+
+	\subsection{Arborescence}
+		Un projet doit contenir un dossier \verb+src+ et un \verb+makefile+ (ou autre outils équivalent), l'exécutable doit être généré dans un second dossier \verb+bin+. De plus, il peut être adjoint un dossier \verb+doc+ qui contiendra la documentation, un dossier \verb+res+ qui contiendra les fichiers utile au fonctionnement de l’exécutable (fichiers de config/données/\dots), \verb+lib+ pour les fichiers nécessaires à la compilation, autre que les codes sources.
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				.
+				├── bin
+				│   └── exec
+				├── makefile
+				└── src
+				    └── main.c
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Arborescence de configuration du projet}
+		\end{figure}
+
+		Nous vous conseillons aussi d'avoir un dossier de compilation qui pourra contenir les différentes architectures cible de votre projet. Cela permet de séparer les fichier des compilations et les fichiers sources, de plus cela permet de compiler en parallèle plusieurs architectures (si besoins est).
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{verbatim}
+				.
+				├── bin
+				│   └── exec
+				├── build
+				│   ├── x86-Linux
+				│   │   └── main.o
+				│   └── arm-Linux
+				│       └── main.o
+				├── makefile
+				...
+			\end{verbatim}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Arborescence de compilation du projet}
+		\end{figure}
+		
+		\subsubsection{Sous arborescence}
+			Les fichiers sources doivent être dispatchés dans des sous dossiers de façon à séparer les éléments du code en les regroupant par catégorie.
+
+			Le nombre de sous répertoires ainsi que leurs profondeur est sans limite. Cependant la compréhension du code doit rester claire.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					.
+					└── src
+					    ├── libs
+					    │   └── json
+					    │       ├── json.c
+					    │       └── json.h
+					    └── main.c
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Sous arborescence de projet}
+			\end{figure}
+
+		\subsubsection{inclusion / et lib}
+			Beaucoup de gens on la mauvaise manie d'utiliser le flag \verb+-Idir+ de gcc qui permet d'inclure des dossiers dans les path utilisé pour trouver les headers. Il est vrai que techniquement parlant c'est fonctionnel, mais cela nuit de façon non négligeable à la lisibilité du code.
+
+			répertoires ainsi que leurs profondeur est sans limite. Cependant la compréhension du code doit rester claire.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					// main.c
+					#include "json.h"
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					gcc -o main.o -c main.c -Ilib/json
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemple de commande à ne pas utiliser}
+			\end{figure}
+
+			Dans la figure ci contre nous ne somme pas capable au premier regard de savoir ou ce trouver le fichier json.h, et ainsi il deviens plus compliqué de retravailler le code. De plus dans le cas ou vous utilisez un IDE, et que vous souhaitez repasser sur un outil libre par la suite vous devrez reprendre tous vos code sources pour replacer tous les path aux bon endroits.
+
+			Au contraire utiliser des path complets permet d'avoir un code beaucoup plus lisible bien que cela demande un peut plus de reflexion au debut du projet pour savoir comment seront organisés les fichiers.
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					// main.c
+					#include "lib/json/json.h"
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{verbatim}
+					gcc -o main.o -c main.c
+				\end{verbatim}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemple de ce qui est préconisé}
+			\end{figure}
+
+	\subsection{outils}
+		Dans certains cas nous voulons garder les outils que nous utilisons pour une version particulière de nos projet, cela est compréhensible et parfois nécessaire pour des logiciels qui sont certifiés.
+
+		Bien qu'il puisse être tentant de placer les outils. sources dans les projet à proprement parler, ceci est à éviter. Cela va alourdir le projet et le rendre plus complexe à manipuler tout en augmentant de façon artificiel son volume. Imaginez que vous utilisiez \verb+GCC+ 4.10 pour la version 1 de votre projet et que pour la version deux vous décidez d'utiliser la version 7.5. Vous devrez traîner deux version de \verb+GCC+ à chaque clone, même si vous n'en utilisez qu'une.
+
+		Nous vous préconisons dans ce cas de créer un projet annexe pour chaque outils (fork/clone) et dans votre projet principal n'utiliser qu'un lien vers 
+		l’outil en question.
