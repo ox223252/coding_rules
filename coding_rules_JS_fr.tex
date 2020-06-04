@@ -7,11 +7,11 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{JS}
 				var i = 0; // compteur de boucle
 				var j = 0; // compteur de boucle
 				var outFileAddr = ""; // adresse du fichier de sortie
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Déclaration des variables}
@@ -22,7 +22,7 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{JS}
 				////////////////////////////////////////////////////////////////////////////////
 				/// \file monModule.js
 				/// \author ox223252
@@ -48,7 +48,7 @@
 				{
 				    ...
 				}
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Fichier monModule.js}
@@ -61,9 +61,9 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{JS}
 					var compteurDeBoucle = 0;
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 			\end{figure}
@@ -77,11 +77,11 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{JS}
 					var i = 0; // compteur de boucle
 					var j = 0; // compteur de boucle
 					var outFileAddr = ""; // adresse du fichier de sortie
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Déclaration des variables}
@@ -117,7 +117,7 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{JS}
 				// Cette exemple montre l'utilisation d'une IIFE pour réaliser un module
 				var monModule = (function ( o )
 				{
@@ -141,7 +141,7 @@
 				    // Exemple d'import d'un objet
 				})( obj );
 				monModule.methodePublique ( );
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Modules}
@@ -158,24 +158,24 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{JS}
 					a = b >> 4 + c;
 					a = ( b >> 4 ) + c;
 					a = b >> ( 4 + c );
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{placement des parenthèses sur oppérations}
 
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{JS}
 					if ( ( a == 0 ) ||
 					    ( b > 10 ) &&
 					    ( b < 23 ) )
 					{
 					    ...
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{placement des parenthèses sur conditions}
@@ -189,7 +189,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{JS}
 					if ( value < 2 )
 					{ // commentaire autorisé si besoin
 					    console.log ( "hey" );
@@ -198,7 +198,7 @@
 					{ // commentaire autorisé si besoin
 					    console.log ( "ho" );
 					}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Placement des accolades}
@@ -215,14 +215,14 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{JS}
 					// ecrire
 					var monObjet = {} ;
 					var monTableau = [] ;
 					// Plutot que
 					var monObjet = new Object() ;
 					var monTableau = new Array() ;
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{New objects}
@@ -234,12 +234,12 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{JS}
 					var a1 = ('1' == 1); // true
 					var a2 = ('1' === 1); // false
 					var a3 = ('true' == true); // true
 					var a4 = ('true' === true); // false
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{\'Egalité stricte}
@@ -268,7 +268,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{JS}
 					// Mauvais
 					for (var i = 0; i < 10000; i++)
 					{
@@ -286,7 +286,7 @@
 					{
 					    monElement.innerHTML = i;
 					}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Selecteur}

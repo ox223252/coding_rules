@@ -22,14 +22,14 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#ifndef __FUNCTION_H__
 					#define __FUNCTION_H__
 
 					...
 
 					#endif
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier function.h}
@@ -44,11 +44,11 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					int i = 0; // compteur de boucle
 					int j = 0; // compteur de boucle
 					char outFileAddr[20] = { 0 }; // adresse du fichier de sortie
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Déclaration des variables}
@@ -62,7 +62,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					////////////////////////////////////////////////////////////////////////////////
 					/// \file mallocND.h
 					/// \author ox223252
@@ -90,7 +90,7 @@
 					////////////////////////////////////////////////////////////////////////////////
 					int malloc2D ( const uint8_t sizeOfType , const uint64_t a, const uint64_t b, 
 					    void ***ptr );
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier mallocND.h}
@@ -107,10 +107,10 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#define FONCTION_DEBUG_TRACE(...) {printf(__VA_ARGS__);}
 					#define ARRAYSIZE 10
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Typographie de définitions}
@@ -122,9 +122,9 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#define FONCTION_DEBUG_TRACE(...) {printf(__VA_ARGS__);}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{fonction.c}
@@ -135,9 +135,9 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#define ARRAYSIZE 10
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{fonction.h}
@@ -148,10 +148,10 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#define MAX(x,y) ((x < y)?y:x)
 					#define PI 3.14159
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier define.h}
@@ -165,13 +165,13 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					// deprecated
 					#define CARRE(x) ((x)*(x))
 					...
 					b = CARRE(a++); // b = ((a++)*(a++))
 					....
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Contre exemple d'utilisation du define pour des macros}
@@ -179,7 +179,7 @@
 
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					inline int carre(x)
 					{
 					    return x * x;
@@ -187,7 +187,7 @@
 					...
 					b = carre(a++); // b = a*a; a++;
 					....
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Exemple d'utilisation du inline}
@@ -200,19 +200,19 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#define ERROR_ADDR 0x01
 					#define ERROR_FLAG 0x02
 					#define TEMPO 12
 					...
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Contre exemple d'utilisation du define pour des constantes}
 				
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					typedef enum
 					{
 					    ERROR_CODE_OK, ///< retour normal
@@ -221,7 +221,7 @@
 					}
 					ERROR_CODE;
 					const uint8_t TEMPO = 12; ///< temporisation après mise à HIGH du pin 13
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Exemple d'enum}
@@ -234,9 +234,9 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					int compteurDeBoucle = 0;
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 			\end{figure}
@@ -250,11 +250,11 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					int i = 0; // compteur de boucle
 					int j = 0; // compteur de boucle
 					char outFileAddr[20]; // adresse du fichier de sortie
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Déclaration des variables}
@@ -265,21 +265,21 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					char *g_outputFolder = NULL;
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier fonction.c}
 
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#ifndef __FONCTION_H__
 					#define __FONCTION_H__
 					extern char *g_outputFolder; ///< nom du fichier de sortie
 					#endif
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier fonction.h}
@@ -290,9 +290,9 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					char *_fonctions_outputFolderPath; ///< nom du dossier de sortie
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier fonctions.c}
@@ -304,12 +304,12 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					if ( ... )
 					{
 					    uint8_t variable = 0; // variable qui n'aura comme durée de vie que ce bloc de code
 					}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Exemples des types disponibles}
@@ -321,11 +321,11 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					char *string = NULL; // pointeur initialisé à null
 					char *string2[20] = { 0 }; // zone mémoire initialisée à 0
 					uint32_t veleur = 0; // variable initialisée à zéro
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Initialisation}
@@ -339,7 +339,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#include <stdint.h>
 
 					int8_t ///< entier signé sur 8 bits
@@ -350,7 +350,7 @@
 					uint32_t ///< entier non-signé sur 32 bits
 					int64_t ///< entier signé sur 64 bits
 					uint64_t ///< entier non-signé sur 64 bits
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Exemples des types disponibles}
@@ -362,14 +362,14 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					uint8_t a = 0;
 					uint8_t tmp = 0;
 					if( ... )
 					{
 						tmp = ...;
 					}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 			\end{figure}
@@ -379,13 +379,13 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					uint8_t a = 0;
 					if( ... )
 					{
 						uint8_t tmp = ...;
 					}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 			\end{figure}
@@ -398,10 +398,10 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					free ( ptr );
 					ptr = NULL;
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Libération d'un pointeur}
@@ -414,11 +414,11 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					int fonctionDeTest ( void )
 					{
 					    ...
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 			\end{figure}
@@ -428,11 +428,11 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					uint32_t actionManager_stepGetNext ( void );
 					uint32_t actionManager_stepGetAction ( void );
 					uint32_t actionManager_stepGeturrentAction ( void );
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 			\end{figure}
@@ -445,11 +445,11 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					int function ( const int * restrict a, int * restrict const b )
 					{
 					    ...
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 			\end{figure}
@@ -462,7 +462,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					typedef enum
 					{
 					    ERROR_CODE_OK = 0,
@@ -471,17 +471,17 @@
 					}
 					ERROR_CODE;
 					ERROR_CODE function ( const char *path, const int64_t param1 );
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier fonctions.h}
 
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					errno = EINVAL;
 					return ( __LINE__ );
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier fonctions.c}
@@ -501,24 +501,24 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					a = b >> 4 + c;
 					a = ( b >> 4 ) + c;
 					a = b >> ( 4 + c );
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Placement des parenthèses sur oppérations}
 
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					if ( ( a == 0 ) ||
 					    ( ( b > 10 ) &&
 					    ( b < 23 ) ) )
 					{
 					    ...
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Placement des parenthèses sur conditions}
@@ -532,7 +532,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					int main ( int argc, char **argv )
 					{
 					    if ( argc < 2 )
@@ -545,7 +545,7 @@
 					    }
 					    return ( 0 );
 					}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Placement des accolades}
@@ -571,7 +571,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#ifndef FONCTION_H
 					#define FONCTION_H
 
@@ -585,7 +585,7 @@
 					Point;
 
 					#endif
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier fonction.h}
@@ -601,10 +601,10 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{C}
 				> ./monProgramme
 				use ./monProgramme -h
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Exemple de retour en cas d'appel invalide à un programme}
@@ -625,12 +625,12 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{C}
 				int main ( int argc, char * argv[] )
 				{
 				    argv[ 0 ] // nom du programme
 				}
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Récupération du nom du programme}
@@ -641,13 +641,13 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{C}
 				> ./monProgramme -h
 				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
 				usage: monProgramme inputFile outputFile
 				    inputFile : fichier de données utilisé en entrée
 				    outputFile : fichier de sortie contenant les données traitées
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Exemple d'aide avec arguments obligatoires}
@@ -658,7 +658,7 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{C}
 				> ./monProgramme -h
 				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
 				usage: monProgramme inputFile outputFile [-a value ... ] [-v [-d]] [-h]
@@ -668,7 +668,7 @@
 				    -v | --verbose : affiche des informations durant le traitement
 				    -d : affiche plus de détail
 				    -h | --help : affiche cette page
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Exemple d'aide avec arguments optionnels}
@@ -683,9 +683,9 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{C}
 				monProgramme < inFile > outFile
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 		\end{figure}
@@ -695,9 +695,9 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{C}
 				./monProgramme < input_file > output_file
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 		\end{figure}
@@ -711,7 +711,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					switch ( valeur )
 					{
 					    ...
@@ -720,7 +720,7 @@
 					        break;
 					    }
 					}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Conditions multiples}
@@ -733,7 +733,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					// fichier header
 					typedef enum
 					{
@@ -759,7 +759,7 @@
 					        break;
 					    }
 					}
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Conditions multiples}
@@ -771,13 +771,13 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					if ( ( a == 0 ) ||
 					    ( ( b > 10 ) &&
 					    ( b < 23 ) ) )
 					{
 					...
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Conditions multiples}
@@ -789,7 +789,7 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{C}
 				#ifdef English_dox 
 				    /// Defined by the C++ standard library. 
 				#endif
@@ -799,7 +799,7 @@
 				#ifdef French_dox
 				    /// Définition pour la bibliotheque C++. 
 				#endif
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Doxygen multi-langues}
@@ -810,13 +810,13 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{C}
 				OUTPUT_LANGUAGE        = French
 				OUTPUT_DIRECTORY       = French
 				ENABLE_PREPROCESSING   = YES
 				MACRO_EXPANSION        = YES
 				PREDEFINED             = French_dox
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Doxygen Doxyfile}
@@ -829,7 +829,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#ifndef __MALLOCNC_FR_H__
 					#define __MALLOCNC_FR_H__
 
@@ -867,7 +867,7 @@
 					    void ***ptr );
 					#endif
 					#endif
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier mallocND.fr.h}
@@ -876,7 +876,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					#ifndef __MALLOCNC_EN_H__
 					#define __MALLOCNC_EN_H__
 
@@ -914,7 +914,7 @@
 					    void ***ptr );
 					#endif
 					#endif
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Fichier mallocND.en.h}
@@ -965,10 +965,10 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{latex}
 					The distance between \f$(x_1,y_1)\f$ and \f$(x_2,y_2)\f$ is 
 					    \f$\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}\f$.
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 
@@ -983,7 +983,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{latex}
 					\f[
 					    |I_2|=\left| \int_{0}^T \psi(t) 
 					            \left\{ 
@@ -994,7 +994,7 @@
 					            \right\} dt
 					        \right|
 					\f]
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 
@@ -1036,9 +1036,9 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{shell}
 					USE_MATHJAX            = YES
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Doxygen Doxyfile}
