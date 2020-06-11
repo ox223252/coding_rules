@@ -727,6 +727,8 @@
 			\end{figure}
 
 			Un \verb+swich/case+ sur un \verb+enum+ doit explicitement traiter tous les valeurs possibles de l'\verb+enum+ ou avoir une action \verb+default+.
+			
+			Tous les \verb+switch/cases+ devraient avoir une action \verb+default+ même s'il ne fait rien, cela permet d'être sr que ce n'est pas un oubli.
 
 			Cela permet d’être plus souple quand à l'évolution d'une fonction
 
