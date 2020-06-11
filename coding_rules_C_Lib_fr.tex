@@ -1,0 +1,22 @@
+\section{lib}
+	Lors de la création d'un code ayant pour vocation dêtre une bibliothèque, nous vous conseillons de créer une fonction de test et exemple sous format d'un \verb+weak main+ qui sera overwrite lors de la compilation des futurs projets dans lequels cette bibliothèque sera incluse. Cela à pour avantage de symplifier les tests de non regression et la comprehension général du fonctionnement du code.
+
+	\begin{figure}[H]
+		\begin{changemargin}{-2.5cm}{-2.5cm}
+		\begin{tcolorbox}
+		\begin{minted}[autogobble]{C}
+			int libFunction ( )
+			{
+			    ...
+			}
+
+			
+			int __attribute__((weak)) main ( void )
+			{
+				...
+			}
+		\end{minted}
+		\end{tcolorbox}
+		\end{changemargin}
+		\caption{Fichier function.c}
+	\end{figure}
