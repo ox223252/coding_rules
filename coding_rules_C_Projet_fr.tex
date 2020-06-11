@@ -17,12 +17,12 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
-					SOURCE = src
-					ROOT_DIR = bin
-					EXEC = execName
-					CCFLAGS = -Wall
-					CXXFLAGS = -Wall
+				\begin{minted}[autogobble]{makefile}
+					SOURCE=src
+					ROOT_DIR=bin
+					EXEC=execName
+					CCFLAGS= -Wall
+					CXXFLAGS= -Wall
 					CPP_SRC=$(shell find $(SOURCE) -name *.cpp)
 					CPP_OBJ=$(CPP_SRC:.cpp=.o)
 					C_SRC=$(shell find $(SOURCE) -name *.c)
@@ -44,7 +44,7 @@
 					makedeps:
 					    @makedepend -Y $(C_SRC) $(CPP_SRC) 2> /dev/null
 				    #
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Makefile}
@@ -59,14 +59,14 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{shell}
 				.
 				├── bin
 				│   └── exec
 				├── makefile
 				└── src
 				    └── main.c
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Arborescence de configuration du projet}
@@ -77,7 +77,7 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{verbatim}
+			\begin{minted}[autogobble]{shell}
 				.
 				├── bin
 				│   └── exec
@@ -88,7 +88,7 @@
 				│       └── main.o
 				├── makefile
 				...
-			\end{verbatim}
+			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
 			\caption{Arborescence de compilation du projet}
@@ -102,7 +102,7 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{shell}
 					.
 					└── src
 					    ├── libs
@@ -110,7 +110,7 @@
 					    │       ├── json.c
 					    │       └── json.h
 					    └── main.c
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Sous arborescence de projet}
@@ -124,18 +124,18 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					// main.c
 					#include "json.h"
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{shell}
 					gcc -o main.o -c main.c -Ilib/json
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Exemple de commande à ne pas utiliser}
@@ -148,18 +148,18 @@
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{C}
 					// main.c
 					#include "lib/json/json.h"
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
-				\begin{verbatim}
+				\begin{minted}[autogobble]{shell}
 					gcc -o main.o -c main.c
-				\end{verbatim}
+				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{Exemple de ce qui est préconisé}

@@ -601,7 +601,7 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{minted}[autogobble]{C}
+			\begin{minted}[autogobble]{shell}
 				> ./monProgramme
 				use ./monProgramme -h
 			\end{minted}
@@ -629,7 +629,7 @@
 				int main ( int argc, char * argv[] )
 				{
 				    argv[ 0 ] // nom du programme
-				}
+				    ...
 			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
@@ -641,7 +641,7 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{minted}[autogobble]{C}
+			\begin{minted}[autogobble]{shell}
 				> ./monProgramme -h
 				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
 				usage: monProgramme inputFile outputFile
@@ -658,13 +658,13 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{minted}[autogobble]{C}
+			\begin{minted}[autogobble]{shell}
 				> ./monProgramme -h
 				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
 				usage: monProgramme inputFile outputFile [-a value ... ] [-v [-d]] [-h]
 				    inputFile : fichier de données utilisé en entré
 				    outputFile : fichier de sortie contenant les données traitées
-				    -a | --arg valeur ... : change la donnée d'entée (max 100 valeurs)
+				    -a | --arg valeur ... : change la donnée d entée (max 100 valeurs)
 				    -v | --verbose : affiche des informations durant le traitement
 				    -d : affiche plus de détail
 				    -h | --help : affiche cette page
@@ -683,8 +683,8 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{minted}[autogobble]{C}
-				monProgramme < inFile > outFile
+			\begin{minted}[autogobble]{shell}
+				monProgramme < option > param
 			\end{minted}
 			\end{tcolorbox}
 			\end{changemargin}
@@ -695,7 +695,7 @@
 		\begin{figure}[H]
 			\begin{changemargin}{-2.5cm}{-2.5cm}
 			\begin{tcolorbox}
-			\begin{minted}[autogobble]{C}
+			\begin{minted}[autogobble]{shell}
 				./monProgramme < input_file > output_file
 			\end{minted}
 			\end{tcolorbox}
