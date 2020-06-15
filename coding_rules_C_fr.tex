@@ -51,8 +51,22 @@
 				\end{minted}
 				\end{tcolorbox}
 				\end{changemargin}
-				\caption{Déclaration des variables}
+				\caption{Commentaires monolignes}
 			\end{figure}
+
+			Nous recommandons le commentaire au format mono ligne car il evite une erreur embettante. dans le cas ou vous n'avez pas activé le retour à la ligne automatique de votre editeur de text, pourriez vous retrouver avec ceci :
+
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+				\begin{tcolorbox}
+				\begin{minted}[autogobble]{C}
+					foo ( a ); /* un commentaite ... long */ foo2( a );
+				\end{minted}
+				\end{tcolorbox}
+				\end{changemargin}
+				\caption{Problème sur le format multi-ligne}
+			\end{figure}
+
 			
 		\subsection{Header}
 			Dans le header, nous trouverons des commentaires à destination du programmeur utilisant la fonction, nous aurons donc les explications sur les paramètres des fonctions, leurs retours ainsi que les bugs éventuels.
