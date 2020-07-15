@@ -14,9 +14,7 @@
 
 			Un exemple de \verb+makefile+ de base :
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Makefile}
 				\begin{minted}[autogobble]{makefile}
 					SOURCE=src
 					ROOT_DIR=bin
@@ -45,10 +43,7 @@
 					    @makedepend -Y $(C_SRC) $(CPP_SRC) 2> /dev/null
 				    #
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Makefile}
-			\end{figure}
+			\end{cbox}
 
 		\subsubsection{Cmake}
 			À faire
@@ -56,9 +51,7 @@
 	\subsection{Arborescence}
 		Un projet doit contenir un dossier \verb+src+ et un \verb+makefile+ (ou autre outils équivalent), l'exécutable doit être généré dans un second dossier \verb+bin+. De plus, il peut être adjoint un dossier \verb+doc+ qui contiendra la documentation, un dossier \verb+res+ qui contiendra les fichiers utile au fonctionnement de l’exécutable (fichiers de config/données/\dots), \verb+lib+ pour les fichiers nécessaires à la compilation, autre que les codes sources.
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Arborescence de configuration du projet}
 			\begin{minted}[autogobble]{shell}
 				.
 				├── bin
@@ -67,16 +60,11 @@
 				└── src
 				    └── main.c
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Arborescence de configuration du projet}
-		\end{figure}
+		\end{cbox}
 
 		Nous vous conseillons aussi d'avoir un dossier de compilation qui pourra contenir les différentes architectures cible de votre projet. Cela permet de séparer les fichier des compilations et les fichiers sources, de plus cela permet de compiler en parallèle plusieurs architectures (si besoins est).
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Arborescence de compilation du projet}
 			\begin{minted}[autogobble]{shell}
 				.
 				├── bin
@@ -89,19 +77,14 @@
 				├── makefile
 				...
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Arborescence de compilation du projet}
-		\end{figure}
+		\end{cbox}
 		
 		\subsubsection{Sous arborescence}
 			Les fichiers sources doivent être dispatchés dans des sous dossiers de façon à séparer les éléments du code en les regroupant par catégorie.
 
 			Le nombre de sous répertoires ainsi que leurs profondeur est sans limite. Cependant la compréhension du code doit rester claire.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Sous arborescence de projet}
 				\begin{minted}[autogobble]{shell}
 					.
 					└── src
@@ -111,59 +94,42 @@
 					    │       └── json.h
 					    └── main.c
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Sous arborescence de projet}
-			\end{figure}
+			\end{cbox}
 
 		\subsubsection{inclusion / et lib}
 			Beaucoup de gens on la mauvaise manie d'utiliser le flag \verb+-Idir+ de gcc qui permet d'inclure des dossiers dans les path utilisé pour trouver les headers. Il est vrai que techniquement parlant c'est fonctionnel, mais cela nuit de façon non négligeable à la lisibilité du code.
 
 			répertoires ainsi que leurs profondeur est sans limite. Cependant la compréhension du code doit rester claire.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{C}
 					// main.c
 					#include "json.h"
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
+			\end{cbox}
 
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Exemple de commande à ne pas utiliser}
 				\begin{minted}[autogobble]{shell}
 					gcc -o main.o -c main.c -Ilib/json
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Exemple de commande à ne pas utiliser}
-			\end{figure}
+			\end{cbox}
 
 			Dans la figure ci contre nous ne somme pas capable au premier regard de savoir ou ce trouver le fichier json.h, et ainsi il deviens plus compliqué de retravailler le code. De plus dans le cas ou vous utilisez un IDE, et que vous souhaitez repasser sur un outil libre par la suite vous devrez reprendre tous vos code sources pour replacer tous les path aux bon endroits.
 
 			Au contraire utiliser des path complets permet d'avoir un code beaucoup plus lisible bien que cela demande un peut plus de reflexion au debut du projet pour savoir comment seront organisés les fichiers.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{C}
 					// main.c
 					#include "lib/json/json.h"
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
+			\end{cbox}
 
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Exemple de ce qui est préconisé}
 				\begin{minted}[autogobble]{shell}
 					gcc -o main.o -c main.c
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Exemple de ce qui est préconisé}
-			\end{figure}
+			\end{cbox}
 
 	\subsection{outils}
 		Dans certains cas nous voulons garder les outils que nous utilisons pour une version particulière de nos projet, cela est compréhensible et parfois nécessaire pour des logiciels qui sont certifiés.

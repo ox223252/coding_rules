@@ -4,24 +4,17 @@
 	\section{Commentaires}
 		Deux sortes de commentaires sont à différencier, les commentaires de développement doivent obligatoirement être mono-lignes, et ne servent qu'au programmeur voulant reprendre votre code, ce type de commentaire n'a pour visé que l'explication de zones locales de code ou de spécificités de conception (algorithme\/optimisation\/\dots), ils n'ont pas besoin de suivre une syntaxe spécifique. 
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Déclaration des variables}
 			\begin{minted}[autogobble]{JS}
 				var i = 0; // compteur de boucle
 				var j = 0; // compteur de boucle
 				var outFileAddr = ""; // adresse du fichier de sortie
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Déclaration des variables}
-		\end{figure}
+		\end{cbox}
 
 		Les explications quand à l'utilisation d'une fonction se font en suivant le format Doxygen.
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Fichier monModule.js}
 			\begin{minted}[autogobble]{JS}
 				////////////////////////////////////////////////////////////////////////////////
 				/// \file monModule.js
@@ -49,24 +42,17 @@
 				    ...
 				}
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Fichier monModule.js}
-		\end{figure}
+		\end{cbox}
 	
 	\section{Les variables}
 		\subsection{Typographie}
 			Les noms de variables doivent respecter la norme \verb+camelCase+, soit s'écrire en supprimant les espaces et en mettant la première lettre de chaque mot en MAJUSCULE excepté la première lettre du premier mot.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{JS}
 					var compteurDeBoucle = 0;
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-			\end{figure}
+			\end{cbox}
 
 			Les variables doivent avoir un nom explicite.
 
@@ -74,18 +60,13 @@
 
 			Même si le nom de la variable est explicite il est très fortement conseillé de déclarer chaque variable sur une ligne séparée en début de programme et d'expliquer son utilité.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Déclaration des variables}
 				\begin{minted}[autogobble]{JS}
 					var i = 0; // compteur de boucle
 					var j = 0; // compteur de boucle
 					var outFileAddr = ""; // adresse du fichier de sortie
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Déclaration des variables}
-			\end{figure}
+			\end{cbox}
 			
 		\subsection{Globales}
 			L'usage de variables globales doit être évitée au maximum : On distingue comme variable l'ensemble des types de données y compris les fonctions. Les variables déclarées globales ont une portée ( scope ) sur toute l'application et peuvent réécrire ou se faire réécrire par d'autres parties du code.
@@ -114,9 +95,7 @@
 	\section{Les modules}
 		Les fichiers et / ou principales fonctionnalités d'un programme devraient être enrobées dans un module Cette règle rejoint la règle à propos des variables globales (cf ref 7.1). La portée d'un module étant limitée, on obtient une plus grande maîtrise du code et on évite aussi la propagation de variables à d'autres fonctions. On peut utiliser plusieurs méthodes pour y parvenir : AMD , CommonJS, ES6, objet en notation littérale, module pattern (IIFE).
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Modules}
 			\begin{minted}[autogobble]{JS}
 				// Cette exemple montre l'utilisation d'une IIFE pour réaliser un module
 				var monModule = (function ( o )
@@ -142,10 +121,7 @@
 				})( obj );
 				monModule.methodePublique ( );
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Modules}
-		\end{figure}
+		\end{cbox}
 
 	\section{Règles de syntaxe}
 		\subsection{Parenthèses}
@@ -155,17 +131,12 @@
 
 			Nous placerons un espace autour de chaque parenthèse.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{placement des parenthèses sur oppérations}
 				\begin{minted}[autogobble]{JS}
 					a = b >> 4 + c;
 					a = ( b >> 4 ) + c;
 					a = b >> ( 4 + c );
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{placement des parenthèses sur oppérations}
 
 				\begin{changemargin}{-2.5cm}{-2.5cm}
 				\begin{tcolorbox}
@@ -179,16 +150,14 @@
 				\end{tcolorbox}
 				\end{changemargin}
 				\caption{placement des parenthèses sur conditions}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Accolades}
 			Toutes les instructions conditionnelles ou de boucles doivent toujours utiliser des accolades, même si cette instruction n'est suivie que d'une seule ligne. Délimiter une instruction par un bloc ( \verb+{}+ ) permet de clarifier l'instruction à exécuter pour le développeur ainsi que pour l'interpréteur.
 
 			Les accolades ouvrantes et fermantes doivent se trouver seules sur leur ligne (commentaires autorisés).
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Placement des accolades}
 				\begin{minted}[autogobble]{JS}
 					if ( value < 2 )
 					{ // commentaire autorisé si besoin
@@ -199,10 +168,7 @@
 					    console.log ( "ho" );
 					}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Placement des accolades}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Indentation}
 			L'indentation doit se faire avec des tabulations de 8 éléments de largeur.
@@ -212,9 +178,7 @@
 		\subsection{Notation littérale}
 			La notation littérale doit être utilisée pour créer des objets, tableaux, expressions régulières et primitives. Elle permet d'éviter de réécrire un objet original en cas d'omission de l'opérateur \verb+new+. Vous sécuriserez ainsi le code.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{New objects}
 				\begin{minted}[autogobble]{JS}
 					// ecrire
 					var monObjet = {} ;
@@ -223,27 +187,19 @@
 					var monObjet = new Object() ;
 					var monTableau = new Array() ;
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{New objects}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{l'égalité}
 			Par défaut, l'égalité stricte doit être utilisée. La stricte égalité ( \verb+===+ ) permet de vérifier à la fois la valeur et le type. Dans le cas de la simple égalité ( \verb+==+ ), l'interpréteur essayera de faire correspondre le type des éléments comparés (coercition).
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{\'Egalité stricte}
 				\begin{minted}[autogobble]{JS}
 					var a1 = ('1' == 1); // true
 					var a2 = ('1' === 1); // false
 					var a3 = ('true' == true); // true
 					var a4 = ('true' === true); // false
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{\'Egalité stricte}
-			\end{figure}
+			\end{cbox}
 
 			Ainsi vous aurez une plus grande maîtrise lors des comparaisons et éviterez des résultats non souhaités suite à une conversion de type automatique.
 
@@ -265,9 +221,7 @@
 		\subsection{Selecteurs}
 			Les sélecteurs doivent être mis en cache lors d'un usage répété. L'interaction avec le DOM est lente. Lors de l'usage répété d'un sélecteur, il convient de le mettre en cache pour éviter de retraverser le DOM.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Selecteur}
 				\begin{minted}[autogobble]{JS}
 					// Mauvais
 					for (var i = 0; i < 10000; i++)
@@ -287,10 +241,7 @@
 					    monElement.innerHTML = i;
 					}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Selecteur}
-			\end{figure}
+			\end{cbox}
 
 			Vous augmenterez ainsi les performances.
 

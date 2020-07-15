@@ -19,21 +19,16 @@
 		
 			Un fichier d'en-tête doit avoir le même nom que le fichier source afférant, à l'exception de l'extension en *.h. Si un fichier source à plusieurs fichiers d'en-tête, ils doivent clairement lui faire référence de par leur dénomination.
 			
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier function.h}
 				\begin{minted}[autogobble]{C}
-					#ifndef __FUNCTION_H__
-					#define __FUNCTION_H__
+				#ifndef __FUNCTION_H__
+				#define __FUNCTION_H__
 
-					...
+				...
 
-					#endif
+				#endif
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier function.h}
-			\end{figure}
+			\end{cbox}
 
 			Un fichier d'en-tête ne doit pas contenir de code (excepté des macros, plus de détails si après).
 
@@ -41,31 +36,21 @@
 		\subsection{Source}
 			Deux sortes de commentaires sont à différencier : ceux placés dans les codes sources (\verb+*.c+\/\verb+*.cpp+) doivent obligatoirement être mono-lignes, et ne servent qu'au développeur voulant reprendre votre code. Ce type de commentaire n'a pour visé que l'explication de zones locales du code ou de spécificités de conception (algorithme\/optimisation\/\dots). Les explications quand à l'utilisation d'une fonction ne se font pas dans le code source mais dans le header.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Commentaires monolignes}
 				\begin{minted}[autogobble]{C}
 					int i = 0; // compteur de boucle
 					int j = 0; // compteur de boucle
 					char outFileAddr[20] = { 0 }; // adresse du fichier de sortie
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Commentaires monolignes}
-			\end{figure}
+			\end{cbox}
 
 			Nous recommandons le commentaire au format mono ligne car il evite une erreur embettante. dans le cas ou vous n'avez pas activé le retour à la ligne automatique de votre editeur de text, pourriez vous retrouver avec ceci :
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Problème sur le format multi-ligne}
 				\begin{minted}[autogobble]{C}
 					foo ( a ); /* un commentaite ... long */ foo2( a );
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Problème sur le format multi-ligne}
-			\end{figure}
+			\end{cbox}
 
 			
 		\subsection{Header}
@@ -73,9 +58,7 @@
 
 			Nous utilisons le format Doxygen pour tous les commentaires situés dans les headers.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier mallocND.h}
 				\begin{minted}[autogobble]{C}
 					////////////////////////////////////////////////////////////////////////////////
 					/// \file mallocND.h
@@ -105,10 +88,7 @@
 					int malloc2D ( const uint8_t sizeOfType , const uint64_t a, const uint64_t b, 
 					    void ***ptr );
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier mallocND.h}
-			\end{figure}
+			\end{cbox}
 
 			Les commentaires présents dans les headers doivent être taillés à 80 digits par ligne.
 		
@@ -118,67 +98,45 @@
 		\subsection{Typographie}
 			Les définitions de constantes sont en MAJUSCULES. Les définitions de macros sont en MAJUSCULES.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Typographie de définitions}
 				\begin{minted}[autogobble]{C}
 					#define FONCTION_DEBUG_TRACE(...) {printf(__VA_ARGS__);}
 					#define ARRAYSIZE 10
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Typographie de définitions}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Portée}
 			Les définitions et macros utiles que dans un seul fichier source doivent se trouver dans le dit fichier source.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{fonction.c}
 				\begin{minted}[autogobble]{C}
 					#define FONCTION_DEBUG_TRACE(...) {printf(__VA_ARGS__);}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{fonction.c}
-			\end{figure}
+			\end{cbox}
 
 			Les définitions et macro relatives à un fichier source mais pouvant être appelées ailleurs dans le code doivent se trouver dans le fichier header.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{fonction.h}
 				\begin{minted}[autogobble]{C}
 					#define ARRAYSIZE 10
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{fonction.h}
-			\end{figure}
+			\end{cbox}
 
 			Les macros ou définitions pouvant impacter tout le code peuvent être placées dans un fichier header qui n'aura que cette utilité.
 			
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier define.h}
 				\begin{minted}[autogobble]{C}
 					#define MAX(x,y) ((x < y)?y:x)
 					#define PI 3.14159
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier define.h}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Typage}
 			Comme exprimé en début de paragraphe précédent, nous recommandons très vivement de ne pas utiliser de \verb+define+.
 
 			Pour les fonctions macroscopiques, elles peuvent être remplacées par des fonctions \verb+inline+. Cela permet la vérification des types et une plus grande sécurité quant à des effets de bord indésirables :
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Contre exemple d'utilisation du define pour des macros}
 				\begin{minted}[autogobble]{C}
 					// deprecated
 					#define CARRE(x) ((x)*(x))
@@ -186,13 +144,9 @@
 					b = CARRE(a++); // b = ((a++)*(a++))
 					....
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Contre exemple d'utilisation du define pour des macros}
-				
+			\end{cbox}
 
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Exemple d'utilisation du inline}
 				\begin{minted}[autogobble]{C}
 					inline int carre(x)
 					{
@@ -202,30 +156,22 @@
 					b = carre(a++); // b = a*a; a++;
 					....
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Exemple d'utilisation du inline}
-			\end{figure}
+			\end{cbox}
 
 			De même que pour les macros, les définitions de constantes sont à supprimer au maximum au profit d’énumérations ou de variables \verb+static const+. Cela permet au compilateur de faire les vérifications de typage.
 
 			De plus, tout \verb+enum+ doit commencer par une racine identifiant la classe afin d’éviter les doublons.
 			
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Contre exemple d'utilisation du define pour des constantes}
 				\begin{minted}[autogobble]{C}
 					#define ERROR_ADDR 0x01
 					#define ERROR_FLAG 0x02
 					#define TEMPO 12
 					...
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Contre exemple d'utilisation du define pour des constantes}
+			\end{cbox}
 				
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Exemple d'enum}
 				\begin{minted}[autogobble]{C}
 					typedef enum
 					{
@@ -236,24 +182,17 @@
 					ERROR_CODE;
 					const uint8_t TEMPO = 12; ///< temporisation après mise à HIGH du pin 13
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Exemple d'enum}
-			\end{figure}
+			\end{cbox}
 
 	\section{Variables}
 		\subsection{Typographie}
 			Les noms de variables doivent respecter la norme \verb+camelCase+, soit s'écrire en supprimant les espaces et en mettant la première lettre de chaque mot en MAJUSCULE excepté la première lettre du premier mot.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Typographie}
 				\begin{minted}[autogobble]{C}
 					int compteurDeBoucle = 0;
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-			\end{figure}
+			\end{cbox}
 
 			Les variables doivent avoir un nom explicite.
 
@@ -261,98 +200,68 @@
 
 			Même si le nom de la variable est explicite, il est très fortement conseillé de déclarer chaque variable sur une ligne séparée en début de programme et d'expliquer son utilité.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Déclaration des variables}
 				\begin{minted}[autogobble]{C}
 					int i = 0; // compteur de boucle
 					int j = 0; // compteur de boucle
 					char outFileAddr[20]; // adresse du fichier de sortie
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Déclaration des variables}
-			\end{figure}
+			\end{cbox}
 			
 			Toutes les variables globales doivent être définies et initialisées dans les fichiers sources (\verb+*.c+) et doivent être préfixe par un \verb+g_+. Elles doivent être déclarées dans les headers en \verb+extern+, cela évitera les inclusions multiples et donc les multiples définitions.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier fonction.c}
 				\begin{minted}[autogobble]{C}
 					char *g_outputFolder = NULL;
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier fonction.c}
+			\end{cbox}
 
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier fonction.h}
 				\begin{minted}[autogobble]{C}
 					#ifndef __FONCTION_H__
 					#define __FONCTION_H__
 					extern char *g_outputFolder; ///< nom du fichier de sortie
 					#endif
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier fonction.h}
-			\end{figure}
+			\end{cbox}
 
 			Si vous avez des variables << semi-globales >> (globales pour un seul fichier source), vous pouvez les déclarer dans le fichier source, mais lors de leur nommage ajoutez leur le préfixe : \verb+_<fileName>_varName+.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier fonctions.c}
 				\begin{minted}[autogobble]{C}
 					char *_fonctions_outputFolderPath; ///< nom du dossier de sortie
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier fonctions.c}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Déclaration}
 			Les variables doivent être déclarées de façon à avoir la portée la plus courte possible, ainsi elles devront être déclarées juste avant leur utilisation.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Exemples des types disponibles}
 				\begin{minted}[autogobble]{C}
 					if ( ... )
 					{
 					    uint8_t variable = 0; // variable qui n'aura comme durée de vie que ce bloc de code
 					}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Exemples des types disponibles}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Initialisation}
 			Une variable, de même qu'un tableau mémoire, doit toujours être initialisé \sout{en début de programme} lors de sa déclaration.
 			
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{C}
 					char *string = NULL; // pointeur initialisé à null
 					char *string2[20] = { 0 }; // zone mémoire initialisée à 0
 					uint32_t veleur = 0; // variable initialisée à zéro
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Initialisation}
-			\end{figure}
+			\end{cbox}
 
 			Même si par défaut beaucoup de compilateurs initialisent la mémoire à 0, il arrive que lors d'appels multiples à une fonction, une même variable se retrouve sur sa précédente zone mémoire et récupère sa précédente valeur. Il est donc nécessaire de fixer la valeur d'initialisation.
 
 		\subsection{Typage}
 			Pour chaque environnement définissant ses variables à sa guise, nous recommandons l'utilisation de types explicites définis dans la bibliothèque \verb+stdint.h+.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Exemples des types disponibles}
 				\begin{minted}[autogobble]{C}
 					#include <stdint.h>
 
@@ -365,17 +274,12 @@
 					int64_t ///< entier signé sur 64 bits
 					uint64_t ///< entier non-signé sur 64 bits
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Exemples des types disponibles}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Portée}
 			Les variables doivent être déclarées de façon à avoir la portée la plus courte possible. Ainsi, pour cette structure :
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{C}
 					uint8_t a = 0;
 					uint8_t tmp = 0;
@@ -384,15 +288,11 @@
 						tmp = ...;
 					}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-			\end{figure}
+			\end{cbox}
 
 			On préférera utiliser : 
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{C}
 					uint8_t a = 0;
 					if( ... )
@@ -400,82 +300,61 @@
 						uint8_t tmp = ...;
 					}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-			\end{figure}
+			\end{cbox}
 
 			Les variables globales sont à éviter au maximum, si vous pouvez, les remplacer par des variables locales ou << semi-globales >> à défaut.
 
 		\subsection{Libération}
 			Pour les pointeurs, une fois la libération de la mémoire effectuée, il est nécessaire de remettre le pointeur à \verb+NULL+ manuellement. Tous les compilateurs ne le font pas automatiquement.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Libération d'un pointeur}
 				\begin{minted}[autogobble]{C}
 					free ( ptr );
 					ptr = NULL;
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Libération d'un pointeur}
-			\end{figure}
+			\end{cbox}
 
 	\section{Fonctions}
 		\subsection{Typographie}
 			Les noms de fonctions doivent respecter la norme \verb+camelCase+, soit s'écrire en supprimant les espaces et en mettant la première lettre de chaque mot en MAJUSCULE excepté la première lettre du premier mot.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{C}
 					int fonctionDeTest ( void )
 					{
 					    ...
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-			\end{figure}
+			\end{cbox}
 
 			Si une ou plusieurs fonction appartiennent à un \verb+objet+/\verb+class+ alors on pourra préfixer le nom de la fonction par le nom de l'objet avec un underscore pour séparer les deux \verb+strings+.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{C}
 					uint32_t actionManager_stepGetNext ( void );
 					uint32_t actionManager_stepGetAction ( void );
 					uint32_t actionManager_stepGeturrentAction ( void );
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-			\end{figure}
+			\end{cbox}
 
 			Les fonctions doivent avoir un nom explicite.
 
 		\subsection{Paramètres}
 			Les paramètres des fonctions doivent être au maximum passés en \verb+const+ et \verb+restrict+ quand c'est possible. 
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{}
 				\begin{minted}[autogobble]{C}
 					int function ( const int * restrict a, int * restrict const b )
 					{
 					    ...
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Retour}
 			Utiliser le \verb+return+ pour un retour d'état (réussit, échoue avec un code d'erreur explicite), le retour 0 doit être le retour normal d'une fonction si tout se passe bien, seul les fonctions renvoyant une valeur \verb+max+/\verb+min+/\verb+countNbOfThing+ peuvent déroger à cette règle.
 
 			Il est donc de bon aloi de définir tous les retours possibles dans un \verb+enum+. Dans le cas d'une utilisation de \verb+errno+ avec les codes erreurs standard, il est acceptable de ne pas définir tous les codes erreurs, mais simplement retourner le numéro de ligne en cas d'echec.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier fonctions.h}
 				\begin{minted}[autogobble]{C}
 					typedef enum
 					{
@@ -486,20 +365,14 @@
 					ERROR_CODE;
 					ERROR_CODE function ( const char *path, const int64_t param1 );
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier fonctions.h}
+			\end{cbox}
 
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier fonctions.c}
 				\begin{minted}[autogobble]{C}
 					errno = EINVAL;
 					return ( __LINE__ );
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier fonctions.c}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{portée}
 			Les fonctions dont la portée est limitée au fichier lui-même doivent être définies en \verb+static+, et ne doivent pas être déclarées dans le fichier header correspondant.
@@ -512,20 +385,15 @@
 
 			Nous placerons un espace autour de chaque parenthèse.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Placement des parenthèses sur oppérations}
 				\begin{minted}[autogobble]{C}
 					a = b >> 4 + c;
 					a = ( b >> 4 ) + c;
 					a = b >> ( 4 + c );
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Placement des parenthèses sur oppérations}
+			\end{cbox}
 
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Placement des parenthèses sur conditions}
 				\begin{minted}[autogobble]{C}
 					if ( ( a == 0 ) ||
 					    ( ( b > 10 ) &&
@@ -533,19 +401,14 @@
 					{
 					    ...
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Placement des parenthèses sur conditions}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Accolades}
 			Les accolades étant un grand sujet de dissension au sein des équipes de programmeurs, ici nous imposons que les accolades ouvrantes et fermantes doivent se trouver seules sur leur ligne (commentaires autorisés).
 
 			De plus toutes instructions conditionnelles ou de boucles doivent être suivies d'un bloc entre accolades même si cette instruction n'est suivi que d'une seule ligne.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Placement des accolades}
 				\begin{minted}[autogobble]{C}
 					int main ( int argc, char **argv )
 					{
@@ -560,10 +423,7 @@
 					    return ( 0 );
 					}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Placement des accolades}
-			\end{figure}
+			\end{cbox}
 
 			Ça évide le risque d’ajouter une instruction à la suite de l’indentation et de ne pas voir que cette instruction sera systématique.
 
@@ -582,9 +442,7 @@
 
 			Les structures afférentes à un fichier source mais utilisées ailleurs, doivent être définies dans le fichier header correspondant (\verb+*.h+) et documenté au format Doxygen.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Fichier fonction.h}
 				\begin{minted}[autogobble]{C}
 					#ifndef FONCTION_H
 					#define FONCTION_H
@@ -600,10 +458,7 @@
 
 					#endif
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Fichier fonction.h}
-			\end{figure}
+			\end{cbox}
 
 	\section{Aide \& usage}
 		Vous devez quand vous écrivez un programme, toujours ajouter une notice d'aide quant à l'utilisation du dit programme. Cette notice sera aussi affichée en cas d'appel incorrect au programme.
@@ -612,17 +467,12 @@
 
 		Un programme nécessitant au minimum un argument doit dans le cas d'un appel sans argument afficher l'aide, ou un message indiquant comment avoir l'aide.
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Exemple de retour en cas d'appel invalide à un programme}
 			\begin{minted}[autogobble]{shell}
 				> ./monProgramme
 				use ./monProgramme -h
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Exemple de retour en cas d'appel invalide à un programme}
-		\end{figure}
+		\end{cbox}
 
 		Cet affichage doit indiquer : 
 		\begin{itemize}
@@ -636,25 +486,18 @@
 
 		Le nom du programme ne doit pas être codé en dur dans le logiciel mais récupéré de la ligne de commande.
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Récupération du nom du programme}
 			\begin{minted}[autogobble]{C}
 				int main ( int argc, char * argv[] )
 				{
 				    argv[ 0 ] // nom du programme
 				    ...
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Récupération du nom du programme}
-		\end{figure}
+		\end{cbox}
 
 		Attention: ne pas utiliser les symboles\verb+[ ] < >+ ils ont une signification particulière décrite plus loin, de même les arguments de la ligne de commande ne doivent pas être séparés pas un virgule ou des points. Laissez la ligne d'exemple le plus proche possible de ce que l’utilisateur devrait saisir dans son terminal.
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Exemple d'aide avec arguments obligatoires}
 			\begin{minted}[autogobble]{shell}
 				> ./monProgramme -h
 				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
@@ -662,16 +505,11 @@
 				    inputFile : fichier de données utilisé en entrée
 				    outputFile : fichier de sortie contenant les données traitées
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Exemple d'aide avec arguments obligatoires}
-		\end{figure}
+		\end{cbox}
 
 		Beaucoup de programmes utilisent des paramètres optionnels. Si un paramètre est optionnel il doit être encadré par des crochet \verb+[arg]+, vous pouvez avoir deux types de notation: la notation courte \verb+[-a]+, et la notation longue \verb+[--arg]+. un argument optionnel peut avoir son propre paramètre optionnel :
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{Exemple d'aide avec arguments optionnels}
 			\begin{minted}[autogobble]{shell}
 				> ./monProgramme -h
 				monProgramme lit des données les traites et écrit le retour dans un fichier de sortie.
@@ -683,10 +521,7 @@
 				    -d : affiche plus de détail
 				    -h | --help : affiche cette page
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Exemple d'aide avec arguments optionnels}
-		\end{figure}
+		\end{cbox}
 
 		Si vous observez bien le mode \verb+debug+ \verb+-d+ n'est disponible que si et seulement si le mode \verb+verbose+ est activé \verb+-v+.
 
@@ -694,37 +529,27 @@
 
 		Les symboles \verb+< >+ peuvent être utilisés pour faire des redirections unix, ainsi :
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{}
 			\begin{minted}[autogobble]{shell}
 				monProgramme < option > param
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-		\end{figure}
+		\end{cbox}
 
 		Peut être interprété comme suit : 
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
+		\begin{cbox}{}
 			\begin{minted}[autogobble]{shell}
 				./monProgramme < input_file > output_file
 			\end{minted}
-			\end{tcolorbox}
-			\end{changemargin}
-		\end{figure}
+		\end{cbox}
 
 		Cette commande utilise le contenu de \verb+input_file+ comme entrée standard plutôt que le \verb+stdin+ et utilise le fichier \verb+output_file+ à la place de \verb+stdout+. Pour cette raison les opérateurs \verb+< >+ sont réservés aux redirections.
-			
+
 	\section{Condition}
 		\subsection{switch/case}
 			Un \verb+swich/case+ sur une valeur autre qu'un \verb+enum+ doit avoir une action \verb+default+.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Conditions multiples}
 				\begin{minted}[autogobble]{C}
 					switch ( valeur )
 					{
@@ -735,10 +560,7 @@
 					    }
 					}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Conditions multiples}
-			\end{figure}
+			\end{cbox}
 
 			Un \verb+swich/case+ sur un \verb+enum+ doit explicitement traiter tous les valeurs possibles de l'\verb+enum+ ou avoir une action \verb+default+.
 			
@@ -746,9 +568,7 @@
 
 			Cela permet d’être plus souple quand à l'évolution d'une fonction
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Conditions multiples}
 				\begin{minted}[autogobble]{C}
 					// fichier header
 					typedef enum
@@ -776,17 +596,12 @@
 					    }
 					}
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Conditions multiples}
-			\end{figure}
+			\end{cbox}
 
 		\subsection{Instructions conditionnelles}
 			Une instruction conditionnelle à multiples éléments ne doit avoir qu'un élément de condition par ligne, permettant ainsi une meilleure lisibilité du code.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
+			\begin{cbox}{Conditions multiples}
 				\begin{minted}[autogobble]{C}
 					if ( ( a == 0 ) ||
 					    ( ( b > 10 ) &&
@@ -794,9 +609,6 @@
 					{
 					...
 				\end{minted}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Conditions multiples}
-			\end{figure}
+			\end{cbox}
 
 	\input{coding_rules_C_Documentation_fr}

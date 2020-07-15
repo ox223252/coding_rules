@@ -64,6 +64,25 @@
 }
 \makeatother
 
+\newenvironment{cbox}[1]
+{
+	\def\temp{#1}\ifx\temp\empty
+		\def\a{}
+	\else
+		\def\a{\caption{#1}}
+	\fi
+
+	\begin{figure}[H]
+	\begin{changemargin}{-2.5cm}{-2.5cm}
+	\begin{tcolorbox}
+}
+{
+	\end{tcolorbox}
+	\end{changemargin}
+	\a
+	\end{figure}
+}
+
 \newsavebox{\auteurbm}
 
 \newenvironment{extrait}[1]{\small\slshape
