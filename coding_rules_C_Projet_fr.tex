@@ -101,35 +101,43 @@
 
 			répertoires ainsi que leurs profondeur est sans limite. Cependant la compréhension du code doit rester claire.
 
-			\begin{cbox}{}
-				\begin{minted}[autogobble]{C}
-					// main.c
-					#include "json.h"
-				\end{minted}
-			\end{cbox}
-
-			\begin{cbox}{Exemple de commande à ne pas utiliser}
-				\begin{minted}[autogobble]{shell}
-					gcc -o main.o -c main.c -Ilib/json
-				\end{minted}
-			\end{cbox}
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+					\begin{tcolorbox}
+						\begin{minted}[autogobble]{C}
+							// main.c
+							#include "json.h"
+						\end{minted}
+					\end{tcolorbox}
+					\begin{tcolorbox}
+						\begin{minted}[autogobble]{shell}
+							gcc -o main.o -c main.c -Ilib/json
+						\end{minted}
+					\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemple de commande à ne pas utiliser}
+			\end{figure}
 
 			Dans la figure ci contre nous ne somme pas capable au premier regard de savoir ou ce trouver le fichier json.h, et ainsi il deviens plus compliqué de retravailler le code. De plus dans le cas ou vous utilisez un IDE, et que vous souhaitez repasser sur un outil libre par la suite vous devrez reprendre tous vos code sources pour replacer tous les path aux bon endroits.
 
 			Au contraire utiliser des path complets permet d'avoir un code beaucoup plus lisible bien que cela demande un peut plus de reflexion au debut du projet pour savoir comment seront organisés les fichiers.
 
-			\begin{cbox}{}
-				\begin{minted}[autogobble]{C}
-					// main.c
-					#include "lib/json/json.h"
-				\end{minted}
-			\end{cbox}
-
-			\begin{cbox}{Exemple de ce qui est préconisé}
-				\begin{minted}[autogobble]{shell}
-					gcc -o main.o -c main.c
-				\end{minted}
-			\end{cbox}
+			\begin{figure}[H]
+				\begin{changemargin}{-2.5cm}{-2.5cm}
+					\begin{tcolorbox}
+						\begin{minted}[autogobble]{C}
+							// main.c
+							#include "lib/json/json.h"
+						\end{minted}
+					\end{tcolorbox}
+					\begin{tcolorbox}
+						\begin{minted}[autogobble]{shell}
+							gcc -o main.o -c main.c
+						\end{minted}
+					\end{tcolorbox}
+				\end{changemargin}
+				\caption{Exemple de ce qui est préconisé}
+			\end{figure}
 
 	\subsection{outils}
 		Dans certains cas nous voulons garder les outils que nous utilisons pour une version particulière de nos projet, cela est compréhensible et parfois nécessaire pour des logiciels qui sont certifiés.
