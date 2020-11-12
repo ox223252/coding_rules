@@ -18,6 +18,12 @@
 \usepackage[babel=true]{csquotes}
 \usepackage[colorlinks=true]{hyperref}   % href link
 
+% pip install pygments
+\usepackage{minted}     % code en couleur
+\setlength\partopsep{-\topsep}
+\addtolength\partopsep{-\parskip}
+% \usemintedstyle{rrt}
+
 \usepackage{ulem}       % barrer du text \sout{Texte à barrer} \xout{Texte à hachurer}
 
 \titleformat{\chapter}[display]{\bfseries\Huge}{}{0em}{}[\vspace{-0.5em}]
@@ -57,6 +63,25 @@
 	\fi
 }
 \makeatother
+
+\newenvironment{cbox}[1]
+{
+	\def\temp{#1}\ifx\temp\empty
+		\def\a{}
+	\else
+		\def\a{\caption{#1}}
+	\fi
+
+	\begin{figure}[H]
+	\begin{changemargin}{-2.5cm}{-2.5cm}
+	\begin{tcolorbox}
+}
+{
+	\end{tcolorbox}
+	\end{changemargin}
+	\a
+	\end{figure}
+}
 
 \newsavebox{\auteurbm}
 

@@ -14,15 +14,13 @@
 
 			Un exemple de \verb+makefile+ de base :
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
-				\begin{verbatim}
-					SOURCE = src
-					ROOT_DIR = bin
-					EXEC = execName
-					CCFLAGS = -Wall
-					CXXFLAGS = -Wall
+			\begin{cbox}{Makefile}
+				\begin{minted}[autogobble]{makefile}
+					SOURCE=src
+					ROOT_DIR=bin
+					EXEC=execName
+					CCFLAGS= -Wall
+					CXXFLAGS= -Wall
 					CPP_SRC=$(shell find $(SOURCE) -name *.cpp)
 					CPP_OBJ=$(CPP_SRC:.cpp=.o)
 					C_SRC=$(shell find $(SOURCE) -name *.c)
@@ -44,11 +42,8 @@
 					makedeps:
 					    @makedepend -Y $(C_SRC) $(CPP_SRC) 2> /dev/null
 				    #
-				\end{verbatim}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Makefile}
-			\end{figure}
+				\end{minted}
+			\end{cbox}
 
 		\subsubsection{Cmake}
 			À faire
@@ -56,28 +51,21 @@
 	\subsection{Arborescence}
 		Un projet doit contenir un dossier \verb+src+ et un \verb+makefile+ (ou autre outils équivalent), l'exécutable doit être généré dans un second dossier \verb+bin+. De plus, il peut être adjoint un dossier \verb+doc+ qui contiendra la documentation, un dossier \verb+res+ qui contiendra les fichiers utile au fonctionnement de l’exécutable (fichiers de config/données/\dots), \verb+lib+ pour les fichiers nécessaires à la compilation, autre que les codes sources.
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
-			\begin{verbatim}
+		\begin{cbox}{Arborescence de configuration du projet}
+			\begin{minted}[autogobble]{shell}
 				.
 				├── bin
 				│   └── exec
 				├── makefile
 				└── src
 				    └── main.c
-			\end{verbatim}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Arborescence de configuration du projet}
-		\end{figure}
+			\end{minted}
+		\end{cbox}
 
 		Nous vous conseillons aussi d'avoir un dossier de compilation qui pourra contenir les différentes architectures cible de votre projet. Cela permet de séparer les fichier des compilations et les fichiers sources, de plus cela permet de compiler en parallèle plusieurs architectures (si besoins est).
 
-		\begin{figure}[H]
-			\begin{changemargin}{-2.5cm}{-2.5cm}
-			\begin{tcolorbox}
-			\begin{verbatim}
+		\begin{cbox}{Arborescence de compilation du projet}
+			\begin{minted}[autogobble]{shell}
 				.
 				├── bin
 				│   └── exec
@@ -88,21 +76,16 @@
 				│       └── main.o
 				├── makefile
 				...
-			\end{verbatim}
-			\end{tcolorbox}
-			\end{changemargin}
-			\caption{Arborescence de compilation du projet}
-		\end{figure}
+			\end{minted}
+		\end{cbox}
 		
 		\subsubsection{Sous arborescence}
 			Les fichiers sources doivent être dispatchés dans des sous dossiers de façon à séparer les éléments du code en les regroupant par catégorie.
 
 			Le nombre de sous répertoires ainsi que leurs profondeur est sans limite. Cependant la compréhension du code doit rester claire.
 
-			\begin{figure}[H]
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
-				\begin{verbatim}
+			\begin{cbox}{Sous arborescence de projet}
+				\begin{minted}[autogobble]{shell}
 					.
 					└── src
 					    ├── libs
@@ -110,11 +93,8 @@
 					    │       ├── json.c
 					    │       └── json.h
 					    └── main.c
-				\end{verbatim}
-				\end{tcolorbox}
-				\end{changemargin}
-				\caption{Sous arborescence de projet}
-			\end{figure}
+				\end{minted}
+			\end{cbox}
 
 		\subsubsection{inclusion / et lib}
 			Beaucoup de gens on la mauvaise manie d'utiliser le flag \verb+-Idir+ de gcc qui permet d'inclure des dossiers dans les path utilisé pour trouver les headers. Il est vrai que techniquement parlant c'est fonctionnel, mais cela nuit de façon non négligeable à la lisibilité du code.
@@ -123,20 +103,17 @@
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
-				\begin{verbatim}
-					// main.c
-					#include "json.h"
-				\end{verbatim}
-				\end{tcolorbox}
-				\end{changemargin}
-
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
-				\begin{verbatim}
-					gcc -o main.o -c main.c -Ilib/json
-				\end{verbatim}
-				\end{tcolorbox}
+					\begin{tcolorbox}
+						\begin{minted}[autogobble]{C}
+							// main.c
+							#include "json.h"
+						\end{minted}
+					\end{tcolorbox}
+					\begin{tcolorbox}
+						\begin{minted}[autogobble]{shell}
+							gcc -o main.o -c main.c -Ilib/json
+						\end{minted}
+					\end{tcolorbox}
 				\end{changemargin}
 				\caption{Exemple de commande à ne pas utiliser}
 			\end{figure}
@@ -147,20 +124,17 @@
 
 			\begin{figure}[H]
 				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
-				\begin{verbatim}
-					// main.c
-					#include "lib/json/json.h"
-				\end{verbatim}
-				\end{tcolorbox}
-				\end{changemargin}
-
-				\begin{changemargin}{-2.5cm}{-2.5cm}
-				\begin{tcolorbox}
-				\begin{verbatim}
-					gcc -o main.o -c main.c
-				\end{verbatim}
-				\end{tcolorbox}
+					\begin{tcolorbox}
+						\begin{minted}[autogobble]{C}
+							// main.c
+							#include "lib/json/json.h"
+						\end{minted}
+					\end{tcolorbox}
+					\begin{tcolorbox}
+						\begin{minted}[autogobble]{shell}
+							gcc -o main.o -c main.c
+						\end{minted}
+					\end{tcolorbox}
 				\end{changemargin}
 				\caption{Exemple de ce qui est préconisé}
 			\end{figure}

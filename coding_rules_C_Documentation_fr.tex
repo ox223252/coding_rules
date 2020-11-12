@@ -1,0 +1,260 @@
+\section{Documentation}
+	Les commentaires placés dans les headers doivent être au format Doxygen. Ils doivent être écrits en Anglais avec le plus d'éléments d'explications possibles quant à l'utilisation des fonctions. Vous pouvez de plus en faire une traduction dans votre langue maternelle -- si votre langue maternelle n'est pas l'anglais -- comme dans l'exemple suivant :
+
+	\begin{figure}[H]
+		\begin{changemargin}{-2.5cm}{-2.5cm}
+		\begin{tcolorbox}
+		\begin{minted}[autogobble]{C}
+			#ifdef English_dox 
+			    /// Defined by the C++ standard library. 
+			#endif
+			#ifdef Spanish_dox
+			    /// Definido por la biblioteca estándar C++. 
+			#endif
+			#ifdef French_dox
+			    /// Définition pour la bibliotheque C++. 
+			#endif
+		\end{minted}
+		\end{tcolorbox}
+		\end{changemargin}
+		\caption{Doxygen multi-langues}
+	\end{figure}
+
+	Pour générer le Doxygen dans une seule langue, vous devrez dans le fichier Doxyfile définir quelle langue doit être utilisée pour la génération :
+
+	\begin{figure}[H]
+		\begin{changemargin}{-2.5cm}{-2.5cm}
+		\begin{tcolorbox}
+		\begin{minted}[autogobble]{C}
+			OUTPUT_LANGUAGE        = French
+			OUTPUT_DIRECTORY       = French
+			ENABLE_PREPROCESSING   = YES
+			MACRO_EXPANSION        = YES
+			PREDEFINED             = French_dox
+		\end{minted}
+		\end{tcolorbox}
+		\end{changemargin}
+		\caption{Doxygen Doxyfile}
+	\end{figure}
+
+	\subsection{Multi-langue}
+
+		Comme on peut le voir ici, la documentation peut devenir très volumineuse, il est donc recommandé de séparer la documentation dans des fichiers headers différents pour chaque langues.
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{minted}[autogobble]{C}
+				#ifndef __MALLOCNC_FR_H__
+				#define __MALLOCNC_FR_H__
+
+				#ifndef French_dox
+				#define French_dox
+				#endif
+
+				#ifdef French_dox
+				////////////////////////////////////////////////////////////////////////////////
+				/// \file mallocND.fr.h
+				/// \author ox223252
+				/// \date 2016-06
+				/// \version 0.0
+				////////////////////////////////////////////////////////////////////////////////
+
+				#include <stdlib.h>
+				#include <stdint.h>
+
+				////////////////////////////////////////////////////////////////////////////////
+				/// \fn int malloc2D ( const uint8_t sizeOfType , const uint64_t a,
+				/// 	const uint64_t b, void ***ptr );
+				/// \param[in] sizeOfType: nombre d'octet du type (sizeof(type))
+				/// \param[in] a : première dimension du tableau
+				/// \param[in] b : seconde dimension du tableau
+				/// \param[in/out] ptr : pointeur NULL sur le tableau de sortie
+				/// \return 0 success
+				/// \return 1 pointeur non NULL
+				/// \return 2 valeur non gérée pour sizeoftype
+				/// \brief alloue la mémoire pour un tableau deux dimensions ptr[a][b] de type 
+				/// 	paramétré par le "sizeOfType"
+				/// \author ox223252
+				/// \bug pas de bug connus
+				////////////////////////////////////////////////////////////////////////////////
+				int malloc2D ( const uint8_t sizeOfType , const uint64_t a, const uint64_t b, 
+				    void ***ptr );
+				#endif
+				#endif
+			\end{minted}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Fichier mallocND.fr.h}
+		\end{figure}
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{minted}[autogobble]{C}
+				#ifndef __MALLOCNC_EN_H__
+				#define __MALLOCNC_EN_H__
+
+				#ifndef English_dox
+				#define English_dox
+				#endif
+
+				#ifdef English_dox
+				////////////////////////////////////////////////////////////////////////////////
+				/// \file mallocND.en.h
+				/// \author ox223252
+				/// \date 2016-06
+				/// \version 0.0
+				/// \copyright ox223252, 2016-06
+				////////////////////////////////////////////////////////////////////////////////
+
+				#include <stdlib.h>
+				#include <stdint.h>
+
+				////////////////////////////////////////////////////////////////////////////////
+				/// \fn int malloc2D ( const uint8_t sizeOfType , const uint64_t a,
+				/// 	const uint64_t b, void ***ptr );
+				/// \param[ in ] sizeOfType: type length (sizeof(type))
+				/// \param[ in ] a: first dimention of ptr array
+				/// \param[ in ] b: second dimention of ptr array
+				/// \param[ in/out ] ptr: NULL pointer on the out array
+				/// \return 0: success
+				/// 	1: non NULL pointer
+				/// 	2: non valid value for sizeoftype
+				/// \brief allow memory for a 2D array ptr[ a ][ b ]
+				/// \author ox223252
+				/// \bug non bugs known
+				////////////////////////////////////////////////////////////////////////////////
+				int malloc2D ( const uint8_t sizeOfType , const uint64_t a, const uint64_t b, 
+				    void ***ptr );
+				#endif
+				#endif
+			\end{minted}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Fichier mallocND.en.h}
+		\end{figure}
+					
+	\subsection{Mots clés}
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tabular}{@{\extracolsep{\fill}} | c || l | }
+				\hline
+				\verb+\attention+ & débute un paragraphe "attention" \\ \hline
+				\verb+\author+ & pour donner le nom de l'auteur. \\ \hline
+				\verb+\brief+ & pour donner une description courte. \\ \hline
+				\verb+\code{type}+ & \\
+				\verb+    +\dots & place un bloc de code. \\
+				\verb+\endcode+ & \\ \hline
+				\verb+\copyright+ & pour indiquer un copyright. \\ \hline
+				\verb+\def+ & pour documenter un \verb+#define+. \\ \hline
+				\verb+\deprecated+ & pour spécifier qu'une fonction / variable\dots n'est plus utilisée. \\ \hline
+				\verb+\enum+ & pour documenter un type énuméré. \\ \hline
+				\verb+\example+ & pour écrire définir une fonction. \\ \hline
+				\verb+\file+ & pour documenter un fichier. \\ \hline
+				\verb+\fixme+ & pour indiquer un code défectueux, << à réparer >> \\ \hline
+				\verb+\fn+ & pour documenter une fonction. \\ \hline
+				\verb+\li+ & pour faire une puce. \\ \hline
+				\verb+\note+ & paragraphe de notes. \\ \hline
+				\verb+\par+ & [title] paragraphe. \\ \hline
+				\verb+\param+ & pour documenter un paramètre de fonction/méthode. \\ \hline
+				\verb+\remark+ & paragraphe de texte indenté. \\ \hline
+				\verb+\return+ & pour documenter les valeurs de retour d'une méthode/fonction. \\ \hline
+				\verb+\see+ & pour renvoyer le lecteur vers quelque chose (une fonction, une classe, un fichier\dots). \\ \hline
+				\verb+\since+ & pour faire une note de version (ex : disponible depuis\dots). \\ \hline
+				\verb+\struct+ & pour documenter une structure C. \\ \hline
+				\verb+\todo+ & pour indiquer une opération restant << à faire >>. \\ \hline
+				\verb+\typedef+ & pour documenter la définition d'un type. \\ \hline
+				\verb+\union+ & pour documenter une union C. \\ \hline
+				\verb+\var+ & pour documenter une variable / un typedef / un énuméré. \\ \hline
+				\verb+\version+ & pour donner le numéro de version. \\ \hline
+				\verb+\warning+ & pour attirer l'attention. \\ \hline
+			\end{tabular}
+			\end{changemargin}
+			\caption{Commandes Doxygen usuelles}
+		\end{figure}
+
+	\subsection{Formules Mathématiques}
+		Si dans une fonction vous utilisez des formules mathématiques devant être notées, pour informer l'utilisateur, ou pour des raisons de certifications, utilisez les formules \LaTeX, elles sont comprises par Doxygen :
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{minted}[autogobble]{latex}
+				The distance between \f$(x_1,y_1)\f$ and \f$(x_2,y_2)\f$ is 
+				    \f$\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}\f$.
+			\end{minted}
+			\end{tcolorbox}
+			\end{changemargin}
+
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+				The distance between $(x_1,y_1)$ and $(x_2,y_2)$ is $\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Exemples de formules mathématiques (1)}
+		\end{figure}
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{minted}[autogobble]{latex}
+				\f[
+				    |I_2|=\left| \int_{0}^T \psi(t) 
+				            \left\{ 
+				                u(a,t)-
+				                \int_{\gamma(t)}^a 
+				                \frac{d\theta}{k(\theta,t)}
+				                \int_{a}^\theta c(\xi)u_t(\xi,t)\,d\xi
+				            \right\} dt
+				        \right|
+				\f]
+			\end{minted}
+			\end{tcolorbox}
+			\end{changemargin}
+
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+				$ |I_2|=\left| \int_{0}^T \psi(t) 
+					\left\{ 
+						u(a,t)-
+						\int_{\gamma(t)}^a 
+						\frac{d\theta}{k(\theta,t)}
+						\int_{a}^\theta c(\xi)u_t(\xi,t)\,d\xi
+					\right\} dt
+				\right| $
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Exemples de formules mathématiques (2)}
+		\end{figure}
+
+		\begin{figure}[H]
+			\begin{tabular*}{\textwidth}{| c@{\extracolsep{\fill} } l@{\extracolsep{\fill}->} c |}
+				\hline
+				\verb+$ formule\ mathématique $+ & & $ formule\ mathématique $ \\ \hline
+				\verb+\int_{indice}^{exposant}+ & & $ \int_{indice}^{exposant} $ \\ \hline
+				\verb+\frac{diviseur}{dividende}+ & & $ \frac{diviseur}{dividende} $ \\ \hline
+				\verb+\left| valeur \right|+ & & $ \left| valeur \right| $ \\ \hline
+				\verb+{ valeur }+ & & $ { valeur } $ \\ \hline
+				\verb+\psi(a)+ & & $ \psi(a) $ \\ \hline
+				\verb+\theta(b)+ & & $ \theta(b) $ \\ \hline
+				\verb+\gamma(c)+ & & $ \gamma(c) $ \\ \hline
+				\verb+\xi(d)+ & & $ \xi(d) $ \\ \hline
+				\verb+\alpha(e)+ & & $ \alpha(e) $ \\ \hline
+				\verb+\beta(f)+ & & $ \beta(f) $ \\ \hline
+			\end{tabular*}
+			\caption{Mots clés}
+		\end{figure}
+
+		Vous pouvez définir  \verb+USE_MATHJAX+ pour avoir un meilleur rendu des formules :
+
+		\begin{figure}[H]
+			\begin{changemargin}{-2.5cm}{-2.5cm}
+			\begin{tcolorbox}
+			\begin{minted}[autogobble]{shell}
+				USE_MATHJAX            = YES
+			\end{minted}
+			\end{tcolorbox}
+			\end{changemargin}
+			\caption{Doxygen Doxyfile}
+		\end{figure}
